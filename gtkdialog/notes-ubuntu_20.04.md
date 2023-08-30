@@ -2,7 +2,8 @@
 
 ## Upstream source
 
-https://github.com/puppylinux-woof-CE/gtkdialog
+  * Website: https://github.com/puppylinux-woof-CE/gtkdialog
+  * GIT: https://github.com/puppylinux-woof-CE/gtkdialog.git
 
 ### Releases list
 
@@ -29,7 +30,8 @@ libvte-dev \
 libvte-2.91-dev \
 libgtk-layer-shell-dev \
 bison \
-flex
+flex \
+texinfo
 
 ### Maybe some of these were already installed though:
 
@@ -83,7 +85,6 @@ libxrender
 pango
 pixman
 pkg-config
-texinfo
 xorgproto
 
 
