@@ -1,7 +1,27 @@
+# Which ffmpeg release/version to build:
 FFMPEG_RELEASE := http://ffmpeg.org/releases/ffmpeg-6.0.tar.bz2
+# Filename to save the source code to:
 FFMPEG_ZIP := ffmpeg-stable.tar.bz2
+# Folder where to build ffmpeg:
 FFMPEG_DIR := ffmpeg-src
+
+# Folder where the Blackmagic SDK library source code is located.
 DECKLINK_SDK := ../../DecklinkSDK/Linux/include
+
+# Folder where vrecord expects ffmpeg-decklink binaries to be.
+#
+# (Note: The /usr/local/opt is non-POSIX, but merely linuxbrew-specific (AFAIK)).
+# Maybe it'd be good to add preference for /opt/ffmpegdecklink to support
+# proper Linux paths.
+#
+# See: [Linux Filesystem Hierarchy (TLDP)](https://tldp.org/LDP/Linux-Filesystem-Hierarchy/html/opt.html)
+#
+# Splitting "ffmpegdecklink" into "ffmpeg/decklink" as subfolder would also
+# allow having multiple versions of FFmpeg in parallel subfolders of /opt/ffmpeg.
+# Which, btw is the case I do have on several machines/setups productively.
+#
+# My suggestion:
+#BREW_FFDECKLINK := /opt/ffmpeg/decklink/bin
 BREW_FFDECKLINK := /usr/local/opt/ffmpegdecklink/bin
 
 # FFmpeg configure parameters:
@@ -68,10 +88,16 @@ ffmpeg: ffmpeg-download
 clean:
 	cd $(FFMPEG_DIR) && make clean
 
-$(BREW_FFDECKLINK)/ffmpeg-dl: $(FFMPEG_DIR)/ffmpeg
+# Folder where vrecord is looking for ffmpeg-decklink binaries:
+$(BREW_FFDECKLINK):
+	    mkdir -vp $(BREW_FFDECKLINK)
+
+# There probably is a more elegant way to copy these 2 files in one make-rule, but it works.
+$(BREW_FFDECKLINK)/ffmpeg-dl: $(BREW_FFDECKLINK) $(FFMPEG_DIR)/ffmpeg
 	cp -avi $(FFMPEG_DIR)/ffmpeg $(BREW_FFDECKLINK)/ffmpeg-dl
 
-$(BREW_FFDECKLINK)/ffplay-dl: $(FFMPEG_DIR)/ffplay
+$(BREW_FFDECKLINK)/ffplay-dl: $(BREW_FFDECKLINK) $(FFMPEG_DIR)/ffplay
 	cp -avi $(FFMPEG_DIR)/ffplay $(BREW_FFDECKLINK)/ffplay-dl
 
+# Call this one (as sudo) to put the binaries in place:
 install: $(BREW_FFDECKLINK)/ffmpeg-dl $(BREW_FFDECKLINK)/ffplay-dl
