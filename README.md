@@ -19,7 +19,8 @@ been designed with needs of audiovisual archivists in mind.
   * Intended for a consistent, stable and reproducible capture environment, rather than rolling-release with "brew".
   * Tested on GNU/Linux - mainly Debian-based (eg Ubuntu) distros, rather than MacOS.
   * Makes use of the system's packages, libraries and build-environment.
-  * Defaults to PAL (rather than NTSC)
+  * Defaults to PAL (rather than NTSC).
+  * Uses own copy of Blackmagic's SDK libraries.
 
 
 ## Reasons for this fork:
