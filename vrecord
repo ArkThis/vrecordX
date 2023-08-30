@@ -572,6 +572,8 @@ _setup_vrecord_process(){
 }
 
 _get_decklink_inputs(){
+    # Make sure vrecord uses 'the preferred' ffmpeg binaries:
+    _gather_ffmpeg_vars
     # get information on what input device options are available
     unset DECKLINK_DEVICES
     while read decklink_device ; do
