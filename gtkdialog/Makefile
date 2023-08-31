@@ -1,7 +1,7 @@
 GTKD_RELEASE := https://github.com/puppylinux-woof-CE/gtkdialog/archive/refs/tags/0.8.5c.tar.gz
 GTKD_ZIP := gtkdialog-stable.tar.gz
 GTKD_DIR := build
-GTKD_OPT := /opt/gtkdialog
+GTKD_OPT := /usr/local/bin
 
 # Install prerequisites:
 prep:
@@ -28,12 +28,11 @@ download: $(GTKD_DIR)
 gtkdialog: download
 	cd $(GTKD_DIR) && \
 	./autogen.sh && \
-	make
-	cp -av $(GTKD_DIR)/src/gtkdialog . && echo "Success!"
+	make && echo "Success!"
 
-install: gtkdialog
+install:
 	mkdir -p $(GTKD_OPT)
-	cp -av gtkdialog $(GTKD_OPT)/
+	cp -avi $(GTKD_DIR)/src/gtkdialog $(GTKD_OPT)/
 	chmod +x $(GTKD_OPT)/gtkdialog
 	@echo "Installed."
 
