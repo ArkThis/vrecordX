@@ -36,3 +36,10 @@ install: gtkdialog
 	cp -av gtkdialog $(GTKD_OPT)/
 	chmod +x $(GTKD_OPT)/gtkdialog
 	@echo "Installed."
+
+
+clean:
+	@echo "Cleaning up temp files..."
+	rm -r $(GTKD_DIR)
+	rm $(GTKD_ZIP)
+	rm gtkdialog
