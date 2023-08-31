@@ -66,7 +66,30 @@ FF_COMPILE_FLAGS := $(FF_COMPILE_FLAGS1) $(FF_COMPILE_FLAGS2) $(FF_COMPILE_FLAGS
 
 prep:
 	sudo apt update
-	sudo apt install build-essential yasm libbz2-dev libfreetype6-dev libopenjp2-7-dev libvpx-dev libvorbis-dev libxvidcore-dev libmp3lame-dev libx264-dev libfaac-dev libfaad-dev libx265-dev libsdl2-dev libva-dev libvdpau-dev libxcb1-dev libxcb-shm0-dev libxcb-xfixes0-dev libopus-dev libsnappy-dev libtheora-dev
+	sudo apt install \
+	build-essential \
+	yasm \
+	libbz2-dev \
+	libfreetype6-dev \
+	libopenjp2-7-dev \
+	libvpx-dev \
+	libvorbis-dev \
+	libxvidcore-dev \
+	libmp3lame-dev \
+	libx264-dev \
+	libfaac-dev \
+	libfaad-dev \
+	libx265-dev \
+	libsdl2-dev \
+	libva-dev \
+	libvdpau-dev \
+	libxcb1-dev \
+	libxcb-shm0-dev \
+	libxcb-xfixes0-dev \
+	libopus-dev \
+	libsnappy-dev \
+	libtheora-dev \
+	libfontconfig1-dev
 
 
 
@@ -85,9 +108,6 @@ ffmpeg: ffmpeg-download
 
 # ---------------------------
 
-clean:
-	cd $(FFMPEG_DIR) && make clean
-
 # Folder where vrecord is looking for ffmpeg-decklink binaries:
 $(BREW_FFDECKLINK):
 	    mkdir -vp $(BREW_FFDECKLINK)
@@ -101,3 +121,10 @@ $(BREW_FFDECKLINK)/ffplay-dl: $(BREW_FFDECKLINK) $(FFMPEG_DIR)/ffplay
 
 # Call this one (as sudo) to put the binaries in place:
 install: $(BREW_FFDECKLINK)/ffmpeg-dl $(BREW_FFDECKLINK)/ffplay-dl
+
+
+clean:
+	@echo "Cleaning up temp files..."
+	rm -r $(FFMPEG_DIR)
+	rm $(FFMPEG_ZIP)
+
