@@ -11,6 +11,9 @@ SAT_OUTLIER_THRSHLD=14
 AUD_OUTLIER_THRSHLD=10
 BRNG_OUTLIER_THRSHLD=14
 
+GD_BIN="gtkdialog"          # gtkdialog binary
+GDLG=$(which ${GD_BIN})     
+
 _usage(){
     cat <<EOF
 ${SCRIPTNAME} ${VERSION}
@@ -1355,9 +1358,9 @@ _edit_mode(){
     cat "${SHARED_FUNCTIONS_FILE}" >> "${GTK_INC}"
 
     if [[ "${VERBOSE_GTKDIALOG}" = "Y" ]] ; then
-        eval "$(gtkdialog --include="${GTK_INC}" --program MAIN_DIALOG --center)"
+        eval "$(${GDLG} --include="${GTK_INC}" --program MAIN_DIALOG --center)"
     else
-        eval "$(gtkdialog --include="${GTK_INC}" --program MAIN_DIALOG --center 2> /dev/null)"
+        eval "$(${GDLG} --include="${GTK_INC}" --program MAIN_DIALOG --center 2> /dev/null)"
     fi
     MAIN_DIALOG="${MAIN_DIALOG_TMP}"
 
@@ -2157,6 +2160,14 @@ if [[ -z "${FFMPEG_BIN}" ]] ; then
     _gather_ffmpeg_vars
     _include_var CAPTURELOGSUFFIX TIMECODELOGSUFFIX BREW_PREFIX FFMPEG_BIN FFPLAY_BIN FFPROBE_BIN
 fi
+
+if [ ! -z "${GDLG}" ] && [ -f ${GDLG} ] ; then
+    echo "gtkdialog binary found. Good."
+else
+    _report -d -wt "ERROR: gtkdialog executable '${GD_BIN}' not found. Is it installed and path set?"
+    exit 1
+fi
+
 
 SHARED_FUNCTIONS_FILE="${RESOURCE_PATH}/vrecord_functions"
 . "${SHARED_FUNCTIONS_FILE}"
