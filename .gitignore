@@ -1,3 +1,5 @@
 ffmpeg-src/
 ffmpeg-stable.tar.bz2
 gtkdialog-stable.tar.gz
+build/
+gtkdialog
