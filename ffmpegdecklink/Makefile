@@ -1,9 +1,10 @@
 # Which ffmpeg release/version to build:
-FFMPEG_RELEASE := http://ffmpeg.org/releases/ffmpeg-6.0.tar.bz2
+#FFMPEG_RELEASE := http://ffmpeg.org/releases/ffmpeg-6.0.tar.bz2
+FFMPEG_RELEASE := https://ffmpeg.org/releases/ffmpeg-5.1.3.tar.bz2
 # Filename to save the source code to:
 FFMPEG_ZIP := ffmpeg-stable.tar.bz2
 # Folder where to build ffmpeg:
-FFMPEG_DIR := ffmpeg-src
+FFMPEG_DIR := build
 
 # Folder where the Blackmagic SDK library source code is located.
 DECKLINK_SDK := ../../DecklinkSDK/Linux/include
