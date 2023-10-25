@@ -30,13 +30,12 @@ RAW_FORMAT="auto"           # This is the default which means 8-bit YUV 422 or 8
 RAW_FORMAT="yuv422p10"      # 10bpc YUV 422
 RAW_FORMAT="uyvy422"        # 8bpc YUV 422
 
+# Enable this, to make the recording stop automatically after n seconds:
 #LIMIT="-t 10"
 
-
 # Experimental (not tested yet) options.
-
-# MAX_DELAY="-max_delay 200"      # Integer
-# RTBUFSIZE="-rtbufsize 128M"
+#MAX_DELAY="-max_delay 200"      # Integer
+#RTBUFSIZE="-rtbufsize 128M"
 
 
 # ------------------------------
