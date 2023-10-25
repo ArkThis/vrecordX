@@ -64,6 +64,7 @@ FF_DECKLINK := \
 
 FF_COMPILE_FLAGS := $(FF_COMPILE_FLAGS1) $(FF_COMPILE_FLAGS2) $(FF_COMPILE_FLAGS3) $(FF_DECKLINK)
 
+.PHONY: clean install prep ffmpeg ffmpeg-download
 
 prep:
 	sudo apt update

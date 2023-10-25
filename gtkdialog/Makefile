@@ -3,6 +3,8 @@ GTKD_ZIP := gtkdialog-stable.tar.gz
 GTKD_DIR := build
 GTKD_OPT := /usr/local/bin
 
+.PHONY: clean install prep download gtkdialog
+
 # Install prerequisites:
 prep:
 	sudo apt-get install -y --no-install-recommends \
