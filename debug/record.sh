@@ -4,14 +4,18 @@
 
 FFMPEG="/usr/local/opt/ffmpegdecklink/bin/ffmpeg-dl"
 FFPLAY="/usr/local/opt/ffmpegdecklink/bin/ffplay-dl"
+DIR_OUT="~/Videos/vrecord"
 
 # Get this name by "copy/pasting" the string shown in '[]' by 
 # `$ ffmpeg -sources decklink`.
 DL_CARD="DeckLink SDI 4K"
 #DL_CARD="ArkThis Decklink SDI B"
 
+# Select video norm to capture
+VIDEO_NORM="pal"
+#VIDEO_NORM="ntsc"
+
 CONTAINER="-f matroska"
-DIR_OUT="/home/pb/storage/Filmzeug/Captures/vrecord"
 FRAMEMD5="$VIDEO_OUT.framemd5"
 
 TITLE="mode:record - video:'sdi' audio:'embedded' - to end recording press q, esc, or close video window"
@@ -50,7 +54,7 @@ REC="$FFMPEG -y \
     $MAXDELAY \
     -loglevel info \
     -f decklink -draw_bars 0 \
-    -audio_input embedded -video_input sdi -format_code pal \
+    -audio_input embedded -video_input sdi -format_code $VIDEO_NORM \
     -channels 8 -audio_depth 32 \
     -raw_format $RAW_FORMAT \
     -i '$DL_CARD' \
@@ -76,7 +80,7 @@ PASS="$FFMPEG \
     -nostdin -nostats $LIMIT -timecode_format none \
     -loglevel info \
     -f decklink -draw_bars 0 \
-    -audio_input embedded -video_input sdi -format_code pal \
+    -audio_input embedded -video_input sdi -format_code $VIDEO_NORM \
     -channels 8 -audio_depth 32 \
     -raw_format $RAW_FORMAT \
     -i '$DL_CARD' \
