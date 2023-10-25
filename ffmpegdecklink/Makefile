@@ -12,7 +12,7 @@ DECKLINK_SDK := ../../DecklinkSDK/Linux/include
 # Folder where vrecord expects ffmpeg-decklink binaries to be.
 #
 # (Note: The /usr/local/opt is non-POSIX, but merely linuxbrew-specific (AFAIK)).
-# Maybe it'd be good to add preference for /opt/ffmpegdecklink to support
+# Maybe it'd be good to add preference for /opt/ffmpeg/decklink to support
 # proper Linux paths.
 #
 # See: [Linux Filesystem Hierarchy (TLDP)](https://tldp.org/LDP/Linux-Filesystem-Hierarchy/html/opt.html)
