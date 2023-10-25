@@ -4,15 +4,18 @@
 
 FFMPEG="/usr/local/opt/ffmpegdecklink/bin/ffmpeg-dl"
 FFPLAY="/usr/local/opt/ffmpegdecklink/bin/ffplay-dl"
+DIR_OUT="~/Videos/vrecord"
 
 # Get this name by "copy/pasting" the string shown in '[]' by 
 # `$ ffmpeg -sources decklink`.
 DL_CARD="DeckLink SDI 4K"
 #DL_CARD="ArkThis Decklink SDI B"
 
+# Select video norm to capture
+VIDEO_NORM="pal"
+#VIDEO_NORM="ntsc"
+
 CONTAINER="-f matroska"
-DIR_OUT="/home/pb/storage/Filmzeug/Captures/vrecord"
-FRAMEMD5="$VIDEO_OUT.framemd5"
 
 TITLE="mode:record - video:'sdi' audio:'embedded' - to end recording press q, esc, or close video window"
 
@@ -26,13 +29,12 @@ RAW_FORMAT="auto"           # This is the default which means 8-bit YUV 422 or 8
 RAW_FORMAT="yuv422p10"      # 10bpc YUV 422
 RAW_FORMAT="uyvy422"        # 8bpc YUV 422
 
+# Enable this, to make the recording stop automatically after n seconds:
 #LIMIT="-t 10"
 
-
 # Experimental (not tested yet) options.
-
-# MAX_DELAY="-max_delay 200"      # Integer
-# RTBUFSIZE="-rtbufsize 128M"
+#MAX_DELAY="-max_delay 200"      # Integer
+#RTBUFSIZE="-rtbufsize 128M"
 
 
 # ------------------------------
@@ -40,6 +42,7 @@ RAW_FORMAT="uyvy422"        # 8bpc YUV 422
 ACTION="$1"
 VIDEO_NAME="$2"
 VIDEO_OUT="$DIR_OUT/$VIDEO_NAME.mkv"
+FRAMEMD5="$VIDEO_OUT.framemd5"
 
 LIMIT="-t 12000" # 200 minutes (in seconds)
 
@@ -50,7 +53,7 @@ REC="$FFMPEG -y \
     $MAXDELAY \
     -loglevel info \
     -f decklink -draw_bars 0 \
-    -audio_input embedded -video_input sdi -format_code pal \
+    -audio_input embedded -video_input sdi -format_code $VIDEO_NORM \
     -channels 8 -audio_depth 32 \
     -raw_format $RAW_FORMAT \
     -i '$DL_CARD' \
@@ -76,7 +79,7 @@ PASS="$FFMPEG \
     -nostdin -nostats $LIMIT -timecode_format none \
     -loglevel info \
     -f decklink -draw_bars 0 \
-    -audio_input embedded -video_input sdi -format_code pal \
+    -audio_input embedded -video_input sdi -format_code $VIDEO_NORM \
     -channels 8 -audio_depth 32 \
     -raw_format $RAW_FORMAT \
     -i '$DL_CARD' \
