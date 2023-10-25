@@ -41,12 +41,6 @@ ACTION="$1"
 VIDEO_NAME="$2"
 VIDEO_OUT="$DIR_OUT/$VIDEO_NAME.mkv"
 
-if [ -z "$VIDEO_NAME" ]; then
-    echo "ERROR: No video name given."
-    exit 1
-fi
-sleep 1
-
 LIMIT="-t 12000" # 200 minutes (in seconds)
 
 
@@ -100,6 +94,13 @@ case $ACTION in
         ;;
 
     rec)
+        # Here, a video name (to write to) is mandatory:
+        if [ -z "$VIDEO_NAME" ]; then
+            echo "ERROR: No video name given."
+            exit 1
+        fi
+        sleep 1
+
         echo "Writing to video: '$VIDEO_OUT'..."
         CMD="$REC | $PLAY"
         ;;
