@@ -16,7 +16,6 @@ VIDEO_NORM="pal"
 #VIDEO_NORM="ntsc"
 
 CONTAINER="-f matroska"
-FRAMEMD5="$VIDEO_OUT.framemd5"
 
 TITLE="mode:record - video:'sdi' audio:'embedded' - to end recording press q, esc, or close video window"
 
@@ -43,6 +42,7 @@ RAW_FORMAT="uyvy422"        # 8bpc YUV 422
 ACTION="$1"
 VIDEO_NAME="$2"
 VIDEO_OUT="$DIR_OUT/$VIDEO_NAME.mkv"
+FRAMEMD5="$VIDEO_OUT.framemd5"
 
 LIMIT="-t 12000" # 200 minutes (in seconds)
 
