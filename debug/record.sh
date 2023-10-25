@@ -31,6 +31,7 @@ RAW_FORMAT="uyvy422"        # 8bpc YUV 422
 
 # Enable this, to make the recording stop automatically after n seconds:
 #LIMIT="-t 10"
+LIMIT="-t 14400" # 240 minutes (in seconds). Long SP VHS duration ;)
 
 # Experimental (not tested yet) options.
 #MAX_DELAY="-max_delay 200"      # Integer
@@ -43,8 +44,6 @@ ACTION="$1"
 VIDEO_NAME="$2"
 VIDEO_OUT="$DIR_OUT/$VIDEO_NAME.mkv"
 FRAMEMD5="$VIDEO_OUT.framemd5"
-
-LIMIT="-t 12000" # 200 minutes (in seconds)
 
 
 REC="$FFMPEG -y \
