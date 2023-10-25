@@ -7,6 +7,7 @@ GTKD_OPT := /usr/local/bin
 prep:
 	sudo apt-get install -y --no-install-recommends \
 	build-essential \
+	autoconf automake \
 	libgtk2.0-dev \
 	libgtk-3-dev \
 	libvte-dev \
