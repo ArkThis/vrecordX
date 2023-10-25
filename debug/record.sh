@@ -5,6 +5,11 @@
 FFMPEG="/usr/local/opt/ffmpegdecklink/bin/ffmpeg-dl"
 FFPLAY="/usr/local/opt/ffmpegdecklink/bin/ffplay-dl"
 
+# Get this name by "copy/pasting" the string shown in '[]' by 
+# `$ ffmpeg -sources decklink`.
+DL_CARD="DeckLink SDI 4K"
+#DL_CARD="ArkThis Decklink SDI B"
+
 CONTAINER="-f matroska"
 DIR_OUT="/home/pb/storage/Filmzeug/Captures/vrecord"
 FRAMEMD5="$VIDEO_OUT.framemd5"
@@ -54,7 +59,7 @@ REC="$FFMPEG -y \
     -audio_input embedded -video_input sdi -format_code pal \
     -channels 8 -audio_depth 32 \
     -raw_format $RAW_FORMAT \
-    -i 'ArkThis Decklink SDI B' \
+    -i '$DL_CARD' \
     -map_metadata 0:s:v:0 \
     $COLOR \
     -metadata creation_time=now \
@@ -80,7 +85,7 @@ PASS="$FFMPEG \
     -audio_input embedded -video_input sdi -format_code pal \
     -channels 8 -audio_depth 32 \
     -raw_format $RAW_FORMAT \
-    -i 'ArkThis Decklink SDI B' \
+    -i '$DL_CARD' \
     -map_metadata 0:s:v:0 \
     $COLOR \
     -metadata creation_time=now \
@@ -89,6 +94,11 @@ PASS="$FFMPEG \
     -f matroska -write_crc32 0 -live true -"
 
 case $ACTION in
+    list)
+        echo "Listing available decklink devices..."
+        $FFMPEG -hide_banner -sources decklink
+        ;;
+
     rec)
         echo "Writing to video: '$VIDEO_OUT'..."
         CMD="$REC | $PLAY"
