@@ -15,13 +15,24 @@
 # --video-aspect-override=no    Show video with 1:1 pixels 
 #                               (=ignore aspect ratio tech-metadata)
 
+MYDIR=$(dirname "$0")
 MPV="mpv"
 TARGET_SCREEN="1"   # [0..n] Change this number to match your multi-screen setup.
+SCREEN_LAYOUTS="$MYDIR/screenlayout"
 VIDEO="$1"
 
-$MPV \
+if [ -e "$SCREEN_LAYOUTS" ]; then
+    echo "Loading screen layout from '$SCREEN_LAYOUTS'..."
+    source "$SCREEN_LAYOUTS"
+    eval "$HDMI_RIGHT"
+fi
+
+CMD="$MPV \
     --screen=$TARGET_SCREEN \
     --fullscreen \
     --video-unscaled=yes \
     --video-aspect-override=no \
-    $VIDEO
+    $VIDEO"
+
+echo "$CMD"
+eval "$CMD"

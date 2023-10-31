@@ -1,0 +1,15 @@
+# @author: Peter Bubestinger (using arandr)
+# @date: 2023-10-31
+
+# @description:
+# Example for xrandr line to auto-configure multi-screen setup to have 1
+# primary screen - and an HDMI output used to playback only a testsignal:
+# Include this code in your shell scripts, then "eval" the desired xrandr
+# configuration/variable.
+
+HDMI_RIGHT="xrandr \
+    --output HDMI-1 --primary --mode 1920x1080 --pos 0x0 --rotate normal \
+    --output HDMI-2 --mode 720x576 --pos 1920x0 --rotate normal \
+    --output DP-1 --off \
+    --output DP-2 --off \
+    --output VGA-1 --off"
