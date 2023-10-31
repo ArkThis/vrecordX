@@ -1563,6 +1563,7 @@ _lookup_choice(){
         "SDI")       VIDEO_INPUT="sdi";        BMD_VIDEO_INPUT="4" ;;
         "Component") VIDEO_INPUT="component";  BMD_VIDEO_INPUT="2" ;;
         "S-Video")   VIDEO_INPUT="s_video";    BMD_VIDEO_INPUT="6" ;;
+        "HDMI")      VIDEO_INPUT="hdmi";       BMD_VIDEO_INPUT="x" ;;
 
         # audio inputs
         "Analog")                  AUDIO_INPUT="analog" ;   BMD_AUDIO_INPUT="1" ;;
@@ -2207,7 +2208,7 @@ DECKLINK_UTILITIES=("ffmpeg")
 if $BMDTOOLS_INSTALLED ; then
     DECKLINK_UTILITIES+=("bmdcapture")
 fi
-VIDEO_INPUT_OPTIONS=("Composite" "SDI" "Component" "S-Video")
+VIDEO_INPUT_OPTIONS=("Composite" "SDI" "Component" "S-Video" "HDMI")
 AUDIO_INPUT_OPTIONS=("Analog" "SDI Embedded Audio" "Digital Audio (AES/EBU)")
 CONTAINER_OPTIONS=("QuickTime" "Matroska" "AVI" "MXF" "MP4")
 DV_CONTAINER_OPTIONS=("DV" "Matroska" "QuickTime")
