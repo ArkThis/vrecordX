@@ -2,7 +2,11 @@
 
 # Install prerequisites
 prep:
-	sudo apt install cowsay
+	# Regular distribution repositories:
+	sudo apt install cowsay vlc mpv mediainfo-gui git build-essential
+	# Requires MediaArea repositories enabled:
+	# (For instructions see INSTALL.md - or the [MediaArea Website](https://mediaarea.net/en/Repos))
+	sudo apt install qctools qcli
 
 
 # Build FFmpeg
