@@ -67,7 +67,7 @@ FF_DECKLINK := \
 FF_COMPILE_FLAGS := $(FF_COMPILE_FLAGS1) $(FF_COMPILE_FLAGS2) $(FF_COMPILE_FLAGS3) $(FF_DECKLINK)
 FF_COMPILE_FLAGS_DV := $(FF_COMPILE_FLAGS) $(FF_COMPILE_FLAGS_DV)
 
-.PHONY: clean install prep prep-dv ffmpeg ffmpeg-download
+.PHONY: clean install prep prep-dv prep-optional ffmpeg ffmpeg-download
 
 prep:
 	sudo apt update
@@ -104,6 +104,16 @@ prep-dv:
 	libraw1394-dev \
 	libavc1394-dev \
 	libavc1394-tools
+
+
+# Optional packages for full vrecord use:
+prep-optional:
+	sudo apt install \
+	curl \
+	gnuplot \
+	xmlstarlet \
+	mkvtoolnix \
+	mediaconch
 
 
 
