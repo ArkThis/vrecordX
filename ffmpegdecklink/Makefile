@@ -53,6 +53,8 @@ FF_COMPILE_FLAGS3 := \
 	--enable-pthreads \
 	--enable-bzlib \
 	--enable-zlib
+FF_COMPILE_FLAGS_DV := \
+	--enable-libiec61883
 
 FF_DECKLINK := \
 	--pkg-config-flags=--static \
@@ -63,8 +65,9 @@ FF_DECKLINK := \
 	--enable-decklink
 
 FF_COMPILE_FLAGS := $(FF_COMPILE_FLAGS1) $(FF_COMPILE_FLAGS2) $(FF_COMPILE_FLAGS3) $(FF_DECKLINK)
+FF_COMPILE_FLAGS_DV := $(FF_COMPILE_FLAGS) $(FF_COMPILE_FLAGS_DV)
 
-.PHONY: clean install prep ffmpeg ffmpeg-download
+.PHONY: clean install prep prep-dv ffmpeg ffmpeg-download
 
 prep:
 	sudo apt update
@@ -94,6 +97,15 @@ prep:
 	libfontconfig1-dev
 
 
+# Dependencies for DV capture:
+prep-dv:
+	sudo apt install \
+	libiec61883-dev \
+	libraw1394-dev \
+	libavc1394-dev \
+	libavc1394-tools
+
+
 
 # ---------------------------
 
@@ -106,6 +118,9 @@ ffmpeg-download: $(FFMPEG_DIR)
 
 ffmpeg: ffmpeg-download
 	cd $(FFMPEG_DIR) && ./configure --prefix=$(FF_PREFIX) $(FF_COMPILE_FLAGS) && make $(PARALLEL_MAKE)
+
+ffmpeg-dv: ffmpeg-download
+	cd $(FFMPEG_DIR) && ./configure --prefix=$(FF_PREFIX) $(FF_COMPILE_FLAGS_DV) && make $(PARALLEL_MAKE)
 
 
 # ---------------------------
