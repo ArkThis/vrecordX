@@ -67,7 +67,7 @@ FF_DECKLINK := \
 FF_COMPILE_FLAGS := $(FF_COMPILE_FLAGS1) $(FF_COMPILE_FLAGS2) $(FF_COMPILE_FLAGS3) $(FF_DECKLINK)
 FF_COMPILE_FLAGS_DV := $(FF_COMPILE_FLAGS) $(FF_COMPILE_FLAGS_DV)
 
-.PHONY: clean install prep prep-dv prep-optional ffmpeg ffmpeg-download
+.PHONY: clean install prep prep-dv ffmpeg ffmpeg-dv ffmpeg-download
 
 prep:
 	sudo apt update
@@ -98,8 +98,7 @@ prep:
 
 
 # Dependencies for DV capture:
-prep-dv:
-	make prep
+prep-dv: prep
 	sudo apt install \
 	libiec61883-dev \
 	libraw1394-dev \
@@ -129,7 +128,7 @@ ffmpeg-dv: ffmpeg-download
 
 # Folder where vrecord is looking for ffmpeg-decklink binaries:
 $(BREW_FFDECKLINK):
-	    mkdir -vp $(BREW_FFDECKLINK)
+	mkdir -vp $(BREW_FFDECKLINK)
 
 # There probably is a more elegant way to copy these 2 files in one make-rule, but it works.
 $(BREW_FFDECKLINK)/ffmpeg-dl: $(BREW_FFDECKLINK) $(FFMPEG_DIR)/ffmpeg

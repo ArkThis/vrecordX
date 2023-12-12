@@ -2,16 +2,35 @@
 
 # Xubuntu 20.04.6
 
-## Install prerequisites
+## Install "make":
 
-It makes sense to add the [MediaArea repository (Release versions)](https://mediaarea.net/en/Repos) to your system:
+Most of the setup and installation is done using **Makefiles**
+in the good old "[GNU Make](https://www.gnu.org/software/make/)" syntax.
 
-`$ wget https://mediaarea.net/repo/deb/repo-mediaarea_1.0-24_all.deb && sudo dpkg -i repo-mediaarea_1.0-24_all.deb && sudo apt-get update`
+GNU `make` is a tool well-known and widely supported among program developers.
+You'll also need the `git` tool to checkout vrecordX's code:
+
+Simply install `make` and `git` like this:
+`$ sudo apt install make git`
+
 
 
 ## Download (clone) git repository
 
-`$ git clone https://github.com/ArkThis/vrecordX.git`
+`$ sudo mkdir /opt/vrecordX && chown $USER /opt/vrecordX`
+`$ git clone https://github.com/ArkThis/vrecordX.git /opt/vrecordX`
+
+
+## Install prerequisites:
+
+Each folder of vrecordX contains a "Makefile" that holds all the instructions
+necessary to perform the setup.
+
+Download and install all required packages:
+
+`$ cd /opt/vrecordX`
+`$ make prep`
+
 
 
 ## Build non-distro packages
