@@ -34,8 +34,12 @@ RAW_FORMAT="uyvy422"        # 8bpc YUV 422
 LIMIT="-t 14400" # 240 minutes (in seconds). Long SP VHS duration ;)
 
 # Experimental (not tested yet) options.
-#MAX_DELAY="-max_delay 200"      # Integer
+#MAX_DELAY="-max_delay 400"      # Integer (msec?)
 #RTBUFSIZE="-rtbufsize 128M"
+RTBUFSIZE="-rtbufsize 256M"             # WORKS.
+
+# Play:
+PLAY_SYNC="-probesize 32 -sync video"   # WORKS.
 
 
 # ------------------------------
@@ -44,7 +48,6 @@ ACTION="$1"
 VIDEO_NAME="$2"
 VIDEO_OUT="$DIR_OUT/$VIDEO_NAME.mkv"
 FRAMEMD5="$VIDEO_OUT.framemd5"
-
 
 REC="$FFMPEG -y \
     -nostdin -nostats $LIMIT -timecode_format none \
@@ -70,7 +73,7 @@ REC="$FFMPEG -y \
 
 PLAY="$FFPLAY \
     -v info -hide_banner -stats -autoexit \
-    -probesize 32 -sync video \
+    $PLAY_SYNC \
     -window_title '$TITLE' \
     -i - -af channelmap='0|1:stereo'"
 
@@ -89,6 +92,8 @@ PASS="$FFMPEG \
     -map 0 \
     -f matroska -write_crc32 0 -live true -"
 
+
+
 case $ACTION in
     list)
         echo "Listing available decklink devices..."
@@ -106,9 +111,11 @@ case $ACTION in
         echo "Writing to video: '$VIDEO_OUT'..."
         CMD="$REC | $PLAY"
         ;;
+
     pass)
         CMD="$PASS | $PLAY"
         ;;
+
     *)
         echo "Syntax: {rec,play} video_out"
         exit 0
