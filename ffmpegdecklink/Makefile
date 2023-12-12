@@ -99,6 +99,7 @@ prep:
 
 # Dependencies for DV capture:
 prep-dv:
+	make prep
 	sudo apt install \
 	libiec61883-dev \
 	libraw1394-dev \
