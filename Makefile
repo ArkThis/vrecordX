@@ -1,4 +1,4 @@
-.PHONY: add-mediaarea prep all install ffmpeg gtkdialog
+.PHONY: prep prep-dv all install ffmpeg ffmpeg-dv gtkdialog
 
 MA_REPO_DEB = repo-mediaarea_1.0-24_all.deb 
 
@@ -27,14 +27,21 @@ prep-optional: prep
 	mkvtoolnix \
 	mediaconch
 
+prep-dv: prep
+	sudo apt install \
+	dvrescue \
+	dvrescue-gui \
+	dvgrab
 
-# Build FFmpeg
+
+# Build FFmpeg (SDI-only support):
 ffmpeg:
 	echo "Building ffmpeg with Decklink SDI support (no DV)..."
 	make prep
 	cd ffmpegdecklink && make prep && make ffmpeg
 
 
+# Build FFmpeg (with SDI+DV support)
 ffmpeg-dv: prep
 	echo "Building ffmpeg with Decklink SDI and DV support..."
 	cd ffmpegdecklink && make prep-dv && make ffmpeg-dv
