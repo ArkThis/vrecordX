@@ -106,17 +106,6 @@ prep-dv:
 	libavc1394-tools
 
 
-# Optional packages for full vrecord use:
-prep-optional:
-	sudo apt install \
-	curl \
-	gnuplot \
-	xmlstarlet \
-	mkvtoolnix \
-	mediaconch
-
-
-
 # ---------------------------
 
 $(FFMPEG_DIR):
@@ -126,9 +115,11 @@ ffmpeg-download: $(FFMPEG_DIR)
 	wget -cO $(FFMPEG_ZIP) $(FFMPEG_RELEASE)
 	tar --strip-components=1 --skip-old-files -xjf $(FFMPEG_ZIP) -C $(FFMPEG_DIR)
 
+# Compile FFmpeg for regular SDI capture:
 ffmpeg: ffmpeg-download
 	cd $(FFMPEG_DIR) && ./configure --prefix=$(FF_PREFIX) $(FF_COMPILE_FLAGS) && make $(PARALLEL_MAKE)
 
+# Compile FFmpeg for SDI *and* DV capture:
 ffmpeg-dv: ffmpeg-download
 	cd $(FFMPEG_DIR) && ./configure --prefix=$(FF_PREFIX) $(FF_COMPILE_FLAGS_DV) && make $(PARALLEL_MAKE)
 

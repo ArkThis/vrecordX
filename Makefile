@@ -9,10 +9,27 @@ prep:
 	sudo apt install qctools qcli
 
 
+# Optional packages for full vrecord use:
+# NOTE: for these to pull the right packages, please add the MediaArea repository first!
+# (see "prep:")
+prep-optional:
+	sudo apt install \
+	curl \
+	gnuplot \
+	xmlstarlet \
+	mkvtoolnix \
+	mediaconch
+
+
 # Build FFmpeg
 ffmpeg:
 	make prep
 	cd ffmpegdecklink && make prep && make ffmpeg
+
+
+ffmpeg-dv:
+	make prep
+	cd ffmpegdecklink && make prep-dv && make ffmpeg-dv
 
 
 # Build GTKdialog
