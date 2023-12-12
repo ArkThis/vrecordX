@@ -117,7 +117,14 @@ case $ACTION in
         ;;
 
     *)
-        echo "Syntax: {rec,play} video_out"
+        echo "Syntax: $0 ACTION [VIDEO_NAME]"
+        echo ""
+        echo "ACTIONS:"
+        echo ""
+        echo "  list            List decklink devices"
+        echo "  pass            Passhtrough video (playback only)"
+        echo "  rec VIDEO_NAME  Record video"
+        echo ""
         exit 0
         ;;
 esac
