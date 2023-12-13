@@ -33,7 +33,7 @@ and install all required non-packaged dependencies (like FFmpeg, GTKdialog):
 
 Once that has completed successfully, run install:
 
-`$ sudo make install`
+`$ make install`
 
 This will copy the built binaries into your operating system's folders.
 
