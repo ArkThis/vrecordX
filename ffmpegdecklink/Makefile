@@ -179,6 +179,6 @@ all: prep ffmpeg
 .PHONY: clean
 clean:
 	$(info "Cleaning up temp files...")
-	rm -r $(FFMPEG_DIR)
-	rm $(APT_UPDATED)
+	rm -rf $(FFMPEG_DIR)
+	rm -f $(APT_UPDATED)
 
