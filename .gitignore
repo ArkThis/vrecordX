@@ -1,6 +1,6 @@
 ffmpegdecklink/build/
-ffmpegdecklink/ffmpeg-stable.tar.bz2
 gtkdialog/gtkdialog-stable.tar.gz
 gtkdialog/build/
 gtkdialog/gtkdialog
 repo-mediaarea_*.deb
+apt-updated

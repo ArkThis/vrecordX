@@ -1,13 +1,17 @@
-# Which ffmpeg release/version to build:
+# Which ffmpeg release/version to use:
 #FFMPEG_RELEASE := http://ffmpeg.org/releases/ffmpeg-6.0.tar.bz2
-FFMPEG_RELEASE := https://ffmpeg.org/releases/ffmpeg-5.1.3.tar.bz2
-# Filename to save the source code to:
-FFMPEG_ZIP := ffmpeg-stable.tar.bz2
+FFMPEG_RELEASE_URL := https://ffmpeg.org/releases
+FFMPEG_SOURCE_TAR := ffmpeg-5.1.3.tar.bz2
+FFMPEG_RELEASE := $(FFMPEG_RELEASE_URL)/$(FFMPEG_SOURCE_TAR)
+
 # Folder where to build ffmpeg:
 FFMPEG_DIR := build
 
 # Folder where the Blackmagic SDK library source code is located.
 DECKLINK_SDK := ../../DecklinkSDK/Linux/include
+
+# Comment this out to disable DV support (and dependencies):
+WITH_DV = true
 
 # Folder where vrecord expects ffmpeg-decklink binaries to be.
 #
@@ -65,13 +69,8 @@ FF_DECKLINK := \
 	--enable-decklink
 
 FF_COMPILE_FLAGS := $(FF_COMPILE_FLAGS1) $(FF_COMPILE_FLAGS2) $(FF_COMPILE_FLAGS3) $(FF_DECKLINK)
-FF_COMPILE_FLAGS_DV := $(FF_COMPILE_FLAGS) $(FF_COMPILE_FLAGS_DV)
 
-.PHONY: clean install prep prep-dv ffmpeg ffmpeg-dv ffmpeg-download
-
-prep:
-	sudo apt update
-	sudo apt install \
+PKG_DEFAULT = \
 	build-essential \
 	yasm \
 	libbz2-dev \
@@ -96,32 +95,60 @@ prep:
 	libtheora-dev \
 	libfontconfig1-dev
 
-
-# Dependencies for DV capture:
-prep-dv: prep
-	sudo apt install \
+PKG_DV = \
 	libiec61883-dev \
 	libraw1394-dev \
 	libavc1394-dev \
 	libavc1394-tools
 
+PACKAGES := $(PKG_DEFAULT)
+
+# Compile with DV support:
+ifdef WITH_DV
+	FF_COMPILE_FLAGS := $(FF_COMPILE_FLAGS) $(FF_COMPILE_FLAGS_DV)
+	PACKAGES := $(PACKAGES) $(PKG_DV)
+endif
+
 
 # ---------------------------
+
+APT_UPDATED := apt-updated
+apt-updated:
+	$(info "Updating package source lists...")
+	sudo apt update && touch $(APT_UPDATED)
+
+
+.PHONY: prep
+prep: apt-updated
+	$(info "Installing required packages...")
+	sudo apt install $(PACKAGES)
+
+
+# ---------------------------
+
+.PHONY: ffmpeg-download
+ffmpeg-download: $(FFMPEG_DIR)
+	$(info "Downloading FFmpeg source from upstream...")
+	wget -cO $(FFMPEG_SOURCE_TAR) $(FFMPEG_RELEASE)
+
 
 $(FFMPEG_DIR):
 	mkdir $(FFMPEG_DIR)
 
-ffmpeg-download: $(FFMPEG_DIR)
-	wget -cO $(FFMPEG_ZIP) $(FFMPEG_RELEASE)
-	tar --strip-components=1 --skip-old-files -xjf $(FFMPEG_ZIP) -C $(FFMPEG_DIR)
 
-# Compile FFmpeg for regular SDI capture:
-ffmpeg: ffmpeg-download
+# The tarball is either already included in the git repository, or can be
+# downloaded from upstream:
+$(FFMPEG_SOURCE_TAR): ffmpeg-download
+
+
+.PHONY: ffmpeg-unpack
+ffmpeg-unpack: $(FFMPEG_SOURCE_TAR) $(FFMPEG_DIR)
+	tar --strip-components=1 --skip-old-files -xjf $(FFMPEG_SOURCE_TAR) -C $(FFMPEG_DIR)
+
+.PHONY: ffmpeg
+ffmpeg: ffmpeg-unpack
+	$(info "Building FFmpeg...")
 	cd $(FFMPEG_DIR) && ./configure --prefix=$(FF_PREFIX) $(FF_COMPILE_FLAGS) && make $(PARALLEL_MAKE)
-
-# Compile FFmpeg for SDI *and* DV capture:
-ffmpeg-dv: ffmpeg-download
-	cd $(FFMPEG_DIR) && ./configure --prefix=$(FF_PREFIX) $(FF_COMPILE_FLAGS_DV) && make $(PARALLEL_MAKE)
 
 
 # ---------------------------
@@ -137,12 +164,21 @@ $(BREW_FFDECKLINK)/ffmpeg-dl: $(BREW_FFDECKLINK) $(FFMPEG_DIR)/ffmpeg
 $(BREW_FFDECKLINK)/ffplay-dl: $(BREW_FFDECKLINK) $(FFMPEG_DIR)/ffplay
 	cp -avi $(FFMPEG_DIR)/ffplay $(BREW_FFDECKLINK)/ffplay-dl
 
+
+# ---------------------------
+
 # Call this one (as sudo) to put the binaries in place:
+.PHONY: install
 install: $(BREW_FFDECKLINK)/ffmpeg-dl $(BREW_FFDECKLINK)/ffplay-dl
 
 
+.PHONY: all
+all: prep ffmpeg
+
+
+.PHONY: clean
 clean:
-	@echo "Cleaning up temp files..."
+	$(info "Cleaning up temp files...")
 	rm -r $(FFMPEG_DIR)
-	rm $(FFMPEG_ZIP)
+	rm $(APT_UPDATED)
 

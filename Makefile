@@ -1,65 +1,76 @@
-.PHONY: prep prep-dv all install ffmpeg ffmpeg-dv gtkdialog
+.PHONY: prep all install clean ffmpeg gtkdialog
 
+# Enable/disable =(un)comment these lines:
+WITH_DV = true
+#WITH_QCTOOLS = true
+#WITH_OPTIONAL = true
+
+# MediaArea repository information package (Debian-based):
 MA_REPO_DEB = repo-mediaarea_1.0-24_all.deb 
+
+# List of required packages:
+PKG_DEFAULT = vlc mpv cowsay mediainfo-gui git build-essential
+PKG_OPTIONAL = curl gnuplot xmlstarlet mkvtoolnix mediaconch
+PKG_QCTOOLS = qctools qcli
+PKG_DV = dvrescue dvrescue-gui dvgrab
+
+PACKAGES = $(PKG_DEFAULT)
+
+ifdef WITH_DV
+	PACKAGES := $(PACKAGES) $(PKG_DV) 
+endif
+ifdef WITH_QCTOOLS
+	PACKAGES := $(PACKAGES) $(PKG_QCTOOLS)
+endif
+ifdef WITH_OPTIONAL
+	PACKAGES := $(PACKAGES) $(PKG_OPTIONAL)
+endif
+
+# -------------------------
+
 
 # Install prerequisites
 $(MA_REPO_DEB):
 	# It makes sense to add the [MediaArea repository (Release versions)](https://mediaarea.net/en/Repos) to your system:
-	echo "Adding MediaArea repository package source..."
-	wget https://mediaarea.net/repo/deb/$(MA_REPO_DEB) && sudo dpkg -i $(MA_REPO_DEB) && sudo apt-get update
-
-prep: $(MA_REPO_DEB)
-	# Regular distribution repositories:
-	sudo apt install cowsay vlc mpv mediainfo-gui git build-essential
-	# Requires MediaArea repositories enabled:
-	# (For instructions see INSTALL.md - or the [MediaArea Website](https://mediaarea.net/en/Repos))
-	sudo apt install qctools qcli
+	# (For more information or additional options see the [MediaArea Website](https://mediaarea.net/en/Repos))
+	$(info "Adding MediaArea repository package source...")
+	wget https://mediaarea.net/repo/deb/$(MA_REPO_DEB) && sudo dpkg -i $(MA_REPO_DEB)
+	# In order to update the package lists, you should usually run `apt update` after adding new repos.
+	# Since `apt update`will be called here in the Makefile before installing
+	# packages anyways, so we save time here by not doing it ;)
 
 
-# Optional packages for full vrecord use:
-# NOTE: for these to pull the right packages, please add the MediaArea repository first!
-# (see "prep:")
-prep-optional: prep
-	sudo apt install \
-	curl \
-	gnuplot \
-	xmlstarlet \
-	mkvtoolnix \
-	mediaconch
+APT_UPDATED := apt-updated
+apt-updated:
+	$(info "Updating package source lists...")
+	sudo apt update && touch $(APT_UPDATED)
 
-prep-dv: prep
-	sudo apt install \
-	dvrescue \
-	dvrescue-gui \
-	dvgrab
+
+prep: $(MA_REPO_DEB) apt-updated
+	$(info "Installing required packages...")
+	sudo apt install $(PACKAGES)
 
 
 # Build FFmpeg (SDI-only support):
-ffmpeg:
-	echo "Building ffmpeg with Decklink SDI support (no DV)..."
-	make prep
+ffmpeg: prep
 	cd ffmpegdecklink && make prep && make ffmpeg
 
 
-# Build FFmpeg (with SDI+DV support)
-ffmpeg-dv: prep
-	echo "Building ffmpeg with Decklink SDI and DV support..."
-	cd ffmpegdecklink && make prep-dv && make ffmpeg-dv
-
-
 # Build GTKdialog
-gtkdialog:
-	make prep
+gtkdialog: prep
 	cd gtkdialog && make prep && make gtkdialog
 
 
 # Build everything
-all:
-	make ffmpeg-dv
-	make gtkdialog
+all: ffmpeg gtkdialog
 
 
 # Install everything
 install:
 	cd ffmpegdecklink && sudo make install
 	cd gtkdialog && sudo make install
+
+
+clean:
+	rm $(MA_REPO_DEB)
+	rm $(APT_UPDATED)
