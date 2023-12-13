@@ -1,8 +1,8 @@
 # Which ffmpeg release/version to use:
+FFMPEG_VERSION := 5.1.3
 #FFMPEG_RELEASE := http://ffmpeg.org/releases/ffmpeg-6.0.tar.bz2
-FFMPEG_RELEASE_URL := https://ffmpeg.org/releases
-FFMPEG_SOURCE_TAR := ffmpeg-5.1.3.tar.bz2
-FFMPEG_RELEASE := $(FFMPEG_RELEASE_URL)/$(FFMPEG_SOURCE_TAR)
+FFMPEG_RELEASE := https://ffmpeg.org/releases/ffmpeg-$(FFMPEG_VERSION).tar.bz2
+FFMPEG_ZIP := ffmpeg-5.1.3.tar.bz2
 
 # Folder where to build ffmpeg:
 FFMPEG_DIR := build
@@ -129,7 +129,7 @@ prep: apt-updated
 .PHONY: ffmpeg-download
 ffmpeg-download: $(FFMPEG_DIR)
 	$(info "Downloading FFmpeg source from upstream...")
-	wget -cO $(FFMPEG_SOURCE_TAR) $(FFMPEG_RELEASE)
+	wget -cO $(FFMPEG_ZIP) $(FFMPEG_RELEASE)
 
 
 $(FFMPEG_DIR):
@@ -138,12 +138,12 @@ $(FFMPEG_DIR):
 
 # The tarball is either already included in the git repository, or can be
 # downloaded from upstream:
-$(FFMPEG_SOURCE_TAR): ffmpeg-download
+$(FFMPEG_ZIP): ffmpeg-download
 
 
 .PHONY: ffmpeg-unpack
-ffmpeg-unpack: $(FFMPEG_SOURCE_TAR) $(FFMPEG_DIR)
-	tar --strip-components=1 --skip-old-files -xjf $(FFMPEG_SOURCE_TAR) -C $(FFMPEG_DIR)
+ffmpeg-unpack: $(FFMPEG_ZIP) $(FFMPEG_DIR)
+	tar --strip-components=1 --skip-old-files -xjf $(FFMPEG_ZIP) -C $(FFMPEG_DIR)
 
 .PHONY: ffmpeg
 ffmpeg: ffmpeg-unpack
