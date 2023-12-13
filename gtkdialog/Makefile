@@ -43,7 +43,7 @@ gtkdialog: unpack
 	./autogen.sh && \
 	make && echo "Success!"
 
-install: $(GTKD_OPT)/gtkdialog
+install: $(GTKD_DIR)/src/gtkdialog
 	mkdir -p $(GTKD_OPT)
 	cp -avi $(GTKD_DIR)/src/gtkdialog $(GTKD_OPT)/
 	chmod +x $(GTKD_OPT)/gtkdialog
