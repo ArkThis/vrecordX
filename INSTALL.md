@@ -14,36 +14,33 @@ Simply install `make` and `git` like this:
 `$ sudo apt install make git`
 
 
-
 ## Download (clone) git repository
 
 `$ sudo mkdir /opt/vrecordX && chown $USER /opt/vrecordX`
 `$ git clone https://github.com/ArkThis/vrecordX.git /opt/vrecordX`
 
 
-## Install prerequisites:
+## Install prerequisites
 
 Each folder of vrecordX contains a "Makefile" that holds all the instructions
 necessary to perform the setup.
 
-Download and install all required packages:
-
-`$ cd /opt/vrecordX`
-`$ make prep`
-
-
-
-## Build non-distro packages
-
 In the folder where you have the copy of vrecordX, run the following to build
 and install all required non-packaged dependencies (like FFmpeg, GTKdialog):
 
-```
-$ make prep
-$ make all
-$ make install
-```
+`$ cd /opt/vrecordX`
+`$ make all`
 
-## Run vrecordX
+Once that has completed successfully, run install:
 
+`$ sudo make install`
+
+This will copy the built binaries into your operating system's folders.
+
+
+# Run vrecordX
+
+```
+$ cd /opt/vrecordX
 ./vrecord
+```
