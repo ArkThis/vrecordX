@@ -1,13 +1,10 @@
-GTKD_RELEASE := https://github.com/puppylinux-woof-CE/gtkdialog/archive/refs/tags/0.8.5c.tar.gz
-GTKD_ZIP := gtkdialog-stable.tar.gz
+GTKD_VERSION := 0.8.5c
+GTKD_RELEASE := https://github.com/puppylinux-woof-CE/gtkdialog/archive/refs/tags/$(GTKD_VERSION).tar.gz
+GTKD_ZIP := gtkdialog-$(GTKD_VERSION).tar.gz
 GTKD_DIR := build
 GTKD_OPT := /usr/local/bin
 
-.PHONY: clean install prep download gtkdialog
-
-# Install prerequisites:
-prep:
-	sudo apt-get install -y --no-install-recommends \
+PKG_DEFAULT := \
 	build-essential \
 	autoconf automake \
 	libgtk2.0-dev \
@@ -19,21 +16,34 @@ prep:
 	flex \
 	texinfo
 
+PACKAGES := $(PKG_DEFAULT)
+
+
+.PHONY: all clean install prep download unpack gtkdialog
+
+# Install prerequisites:
+prep:
+	sudo apt-get install -y --no-install-recommends $(PACKAGES)
+
 $(GTKD_DIR):
 	mkdir -p $(GTKD_DIR)
 
-download: $(GTKD_DIR)
+download:
 	# wget from upstream release
 	@wget -nc -O $(GTKD_ZIP) $(GTKD_RELEASE) || true
+
+unpack: $(GTKD_DIR)
 	# Unpack if not already unpacked:
 	[ -e $(GTKD_DIR)/autogen.sh ] || tar --strip-components=1 -xvzf $(GTKD_ZIP) -C $(GTKD_DIR)
 
-gtkdialog: download
+$(GTKD_ZIP): download
+
+gtkdialog: unpack
 	cd $(GTKD_DIR) && \
 	./autogen.sh && \
 	make && echo "Success!"
 
-install:
+install: gtkdialog
 	mkdir -p $(GTKD_OPT)
 	cp -avi $(GTKD_DIR)/src/gtkdialog $(GTKD_OPT)/
 	chmod +x $(GTKD_OPT)/gtkdialog
@@ -43,5 +53,5 @@ install:
 clean:
 	@echo "Cleaning up temp files..."
 	rm -r $(GTKD_DIR)
-	rm $(GTKD_ZIP)
-	rm gtkdialog
+
+all: prep gtkdialog
