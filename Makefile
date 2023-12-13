@@ -72,5 +72,5 @@ install:
 
 
 clean:
-	rm $(MA_REPO_DEB)
-	rm $(APT_UPDATED)
+	rm -f $(MA_REPO_DEB)
+	rm -f $(APT_UPDATED)

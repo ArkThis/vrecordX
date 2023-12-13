@@ -52,6 +52,6 @@ install: gtkdialog
 
 clean:
 	@echo "Cleaning up temp files..."
-	rm -r $(GTKD_DIR)
+	rm -rf $(GTKD_DIR)
 
 all: prep gtkdialog
