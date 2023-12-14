@@ -60,7 +60,7 @@ This will copy the built binaries into your operating system's folders.
 
 To download the Blackmagic Decklink drivers, go to their [Support Page for 'Capture & Playback'](https://www.blackmagicdesign.com/support/family/capture-and-playback):
 
-![](Resources/Documentation/blackmagic_download.png){width=30%}
+![](Resources/Documentation/blackmagic_download.png)
 
 On the left-hand side, you should see the "Desktop Video" downloads:
 "Software Update" and "Developer SDK".
@@ -69,7 +69,7 @@ For example:
 
 > **Desktop Video 12.4.1** => `Blackmagic_Desktop_Video_Linux_12.4.1.tar.gz`
 
-![](Resources/Documentation/blackmagic_download2.png){width=30%}
+![](Resources/Documentation/blackmagic_download2.png)
 
 You may try the following download-link to get the right package directly (if Blackmagic allows):
 [https://swr.cloud.blackmagicdesign.com/DesktopVideo/v12.4.1/Blackmagic_Desktop_Video_Linux_12.4.1.tar.gz](https://swr.cloud.blackmagicdesign.com/DesktopVideo/v12.4.1/Blackmagic_Desktop_Video_Linux_12.4.1.tar.gz?verify=1702550325-jatrdQOiCRo3A0weiYeeyOaelrebz70jrRRZXx5OtpI%3D)
@@ -79,7 +79,7 @@ only need to download the "Desktop Video" package - *for Linux*. You may skip
 entering your personal information for Blackmagic, and use the "Download Only"
 option in the lower-left corner:
 
-![](Resources/Documentation/blackmagic_download_only.png){width=30%}
+![](Resources/Documentation/blackmagic_download_only.png)
 
 
 ## Unpack the Debian Packages
@@ -87,7 +87,7 @@ option in the lower-left corner:
 Within the tarball (.tar.gz) file, extract only the following 3 packages in the
 subfolder `deb/x86_64` (for 64bit Debian-based systems):
 
-![](Resources/Documentation/decklink_drivers_debian.png){width=50%}
+![](Resources/Documentation/decklink_drivers_debian.png)
 
 For example:
 
