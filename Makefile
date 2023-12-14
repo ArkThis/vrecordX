@@ -2,7 +2,7 @@
 
 # Enable/disable =(un)comment these lines:
 WITH_DV = true
-#WITH_QCTOOLS = true
+WITH_QCTOOLS = true
 #WITH_OPTIONAL = true
 
 # MediaArea repository information package (Debian-based):
