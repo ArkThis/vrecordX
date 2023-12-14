@@ -28,7 +28,7 @@ Simply install `make` and `git` like this:
 
 Create a subfolder in `/opt` and assign full ownership (write access) to the currently logged-in user:
 
-`$ sudo mkdir /opt/vrecordX && chown $USER /opt/vrecordX`
+`$ sudo mkdir /opt/vrecordX && sudo chown $USER /opt/vrecordX`
 
 Download the current copy of vrecordX from Github into that folder:
 
@@ -99,10 +99,10 @@ For example:
 ## Install the Debian Packages
 
 ```
-$ sudo apt install \  
-./desktopvideo_12.4.1a15_amd64.deb \  
-./desktopvideo-gui_12.4.1a15_amd64.deb \  
-./mediaexpress_3.8.1a4_amd64.deb`
+$ sudo apt install \
+./desktopvideo_12.4.1a15_amd64.deb \
+./desktopvideo-gui_12.4.1a15_amd64.deb \
+./mediaexpress_3.8.1a4_amd64.deb
 ```
 
 (Update the command accordingly to match the version numbers you're actually installing)
