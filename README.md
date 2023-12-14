@@ -6,7 +6,15 @@ Sponsored by the [Austrian Mediathek](https://www.mediathek.at/), as part of
 their archival video digitization system.
 
 
-## vrecord Summary 
+## Table of Contents
+
+  1. [Summary](#summary)
+  2. [Main Differences](#the-main-differences-are)
+  3. [Reasons for Forking](#reasons-for-this-fork)
+  4. [Installation instruction](INSTALL.md)
+
+
+## Summary 
 
 The [original AMIA "vrecord"](https://github.com/amiaopensource/vrecord)
 is open-source software for capturing a video signal and turning it into a
