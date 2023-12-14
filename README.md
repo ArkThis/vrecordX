@@ -8,9 +8,9 @@ their archival video digitization system.
 
 ## vrecord Summary 
 
-The original AMIA "vrecord" is open-source software for capturing a video
-signal and turning it into a digital file. Its purpose is to make videotape
-digitization or transfer easier.
+The [original AMIA "vrecord"](https://github.com/amiaopensource/vrecord)
+is open-source software for capturing a video signal and turning it into a
+digital file. Its purpose is to make videotape digitization or transfer easier.
 
 Vrecord can capture analog and digital signals through a variety of inputs and
 can create digital video files in a variety of formats and codecs. Vrecord has
@@ -42,8 +42,8 @@ build fine - and another time: fail with errors.
 The original vrecord is simply designed for and tested on MacOS environments.
 vrecordX does not require brew, and uses the more GNU-native "Makefiles" for setup.
 
-So: **vrecordX is for a stable and consistent setup.**  
-In the spirit of Debian-Stable.
+So: **vrecordX is for a stable and consistent setup on GNU/Linux systems.**  
+(In the spirit of [Debian-stable](https://www.debian.org/releases/))
 
 
 We try to keep this fork as in-sync as possible with upstream vrecord, and of
