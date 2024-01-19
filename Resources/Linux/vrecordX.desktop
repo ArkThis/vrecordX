@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=vrecordX
+Exec=/opt/vrecordX/vrecord.sh
+Icon=emblem-colors-green
+Path=/opt/vrecordX
+Terminal=true
+StartupNotify=false
+GenericName=A professional video recording tool
+Comment=See: https://github.com/ArkThis/vrecordX/
