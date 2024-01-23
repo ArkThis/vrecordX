@@ -63,6 +63,7 @@ FF_COMPILE_FLAGS_DV := \
 	--enable-libiec61883
 
 FF_DECKLINK := \
+	--enable-nonfree \
 	--pkg-config-flags=--static \
 	--extra-libs='-lpthread -lm' \
 	--enable-nonfree \
@@ -98,6 +99,7 @@ PKG_DEFAULT = \
 	libtheora-dev \
 	libfontconfig1-dev
 
+# Packages for DV support:
 PKG_DV = \
 	libiec61883-dev \
 	libraw1394-dev \
