@@ -7,5 +7,5 @@
 
 ./vrecord
 
-read -p "Press any key to continue."
+read -p "Press ENTER key to continue."
 clear
