@@ -12,8 +12,13 @@ WITH_DECKLINK = true
 # Folder where the Blackmagic SDK library source code is located.
 DECKLINK_SDK := ../../DecklinkSDK/Linux/include
 
-# Comment this out to disable DV support (and dependencies):
+# Comment this line out to disable DV support (and dependencies):
 WITH_DV = true
+
+# Comment this line out to disable NVIDIA CUDA support (and dependencies):
+WITH_CUDA = true
+CUDA_SDK := /usr/local/cuda/include
+CUDA_SDK_LD := /usr/local/cuda/lib64
 
 # Folder where vrecord expects ffmpeg-decklink binaries to be.
 #
@@ -62,6 +67,17 @@ FF_COMPILE_FLAGS3 := \
 FF_COMPILE_FLAGS_DV := \
 	--enable-libiec61883
 
+FF_COMPILE_FLAGS_CUDA := \
+	--enable-nonfree \
+	--enable-ffnvcodec \
+	--enable-libnpp \
+	--extra-cflags='-I$(CUDA_SDK)' \
+	--extra-ldflags='-L$(CUDA_SDK_LD)' \
+	--enable-cuda-nvcc \
+#	--nvccflags="-gencode arch=compute_52,code=sm_52 -O2"
+#	--enable-cuda-llvm
+#	--disable-static --enable-shared
+
 FF_DECKLINK := \
 	--enable-nonfree \
 	--pkg-config-flags=--static \
@@ -106,6 +122,17 @@ PKG_DV = \
 	libavc1394-dev \
 	libavc1394-tools
 
+# Packages for NVIDIA CUDA support:
+PKG_CUDA = \
+	cmake libtool \
+	libc6 libc6-dev \
+	unzip \
+	wget \
+	libnuma1 libnuma-dev \
+	libnvvm4
+
+# Assume default set of packages, then add additional requirements on "ifdef" conditions:
+
 PACKAGES := $(PKG_DEFAULT)
 
 
@@ -122,6 +149,12 @@ ifdef WITH_DV
 	PACKAGES := $(PACKAGES) $(PKG_DV)
 endif
 
+
+# Compile with NVIDIA CUDA support:
+ifdef WITH_CUDA
+	FF_COMPILE_FLAGS := $(FF_COMPILE_FLAGS) $(FF_COMPILE_FLAGS_CUDA)
+	PACKAGES := $(PACKAGES) $(PKG_CUDA)
+endif
 
 # ---------------------------
 
