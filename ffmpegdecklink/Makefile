@@ -7,6 +7,8 @@ FFMPEG_ZIP := ffmpeg-$(FFMPEG_VERSION).tar.bz2
 # Folder where to build ffmpeg:
 FFMPEG_DIR := build
 
+# Comment this line out to disable Decklink SDK support (and dependencies):
+WITH_DECKLINK = true
 # Folder where the Blackmagic SDK library source code is located.
 DECKLINK_SDK := ../../DecklinkSDK/Linux/include
 
@@ -68,7 +70,8 @@ FF_DECKLINK := \
 	--extra-ldflags='-I$(DECKLINK_SDK)' \
 	--enable-decklink
 
-FF_COMPILE_FLAGS := $(FF_COMPILE_FLAGS1) $(FF_COMPILE_FLAGS2) $(FF_COMPILE_FLAGS3) $(FF_DECKLINK)
+
+FF_COMPILE_FLAGS := $(FF_COMPILE_FLAGS1) $(FF_COMPILE_FLAGS2) $(FF_COMPILE_FLAGS3)
 
 PKG_DEFAULT = \
 	build-essential \
@@ -102,6 +105,14 @@ PKG_DV = \
 	libavc1394-tools
 
 PACKAGES := $(PKG_DEFAULT)
+
+
+# Compile with Decklink support:
+ifdef WITH_DECKLINK
+	FF_COMPILE_FLAGS := $(FF_COMPILE_FLAGS) $(FF_DECKLINK)
+	#PACKAGES := $(PACKAGES) $(PKG_DECKLINK)
+endif
+
 
 # Compile with DV support:
 ifdef WITH_DV
