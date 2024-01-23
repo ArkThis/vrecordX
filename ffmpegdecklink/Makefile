@@ -17,7 +17,7 @@ DECKLINK_SDK := ../../DecklinkSDK/Linux/include
 WITH_DV = true
 
 # Comment this line out to disable NVIDIA CUDA support (and dependencies):
-WITH_CUDA = true
+#WITH_CUDA = true
 CUDA_SDK := /usr/local/cuda/include
 CUDA_SDK_LD := /usr/local/cuda/lib64
 
