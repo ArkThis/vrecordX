@@ -1,0 +1,3 @@
+[submodule "ffmpegdecklink/nv-codec-headers"]
+	path = ffmpegdecklink/nv-codec-headers
+	url = https://github.com/FFmpeg/nv-codec-headers
