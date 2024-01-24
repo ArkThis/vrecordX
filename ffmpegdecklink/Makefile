@@ -92,6 +92,7 @@ FF_DECKLINK := \
 FF_COMPILE_FLAGS := $(FF_COMPILE_FLAGS1) $(FF_COMPILE_FLAGS2) $(FF_COMPILE_FLAGS3)
 
 PKG_DEFAULT = \
+	wget \
 	build-essential \
 	yasm \
 	libbz2-dev \
@@ -125,12 +126,12 @@ PKG_DV = \
 
 # Packages for NVIDIA CUDA support:
 PKG_CUDA = \
+	cuda \
+	nvidia-driver-545 \
+	cuda-toolkit-12 \
 	cmake libtool \
 	libc6 libc6-dev \
-	unzip \
-	wget \
-	libnuma1 libnuma-dev \
-	libnvvm4
+	libnuma1 libnuma-dev
 
 # Assume default set of packages, then add additional requirements on "ifdef" conditions:
 
