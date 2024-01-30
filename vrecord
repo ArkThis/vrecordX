@@ -199,6 +199,8 @@ _setup_env_variables(){
         else
             _report -wt "vrecord can't find a preferred font to use, please report this error to https://github.com/amiaopensource/vrecord/issues"
         fi
+
+		# Gather hardware information (for reporting/documentation):
         HARDWARE_REPORT="$(system_profiler SPHardwareDataType)"
         COMPUTER_MODEL_NAME="$(_parse_report "Model Name" "${HARDWARE_REPORT}")"
         COMPUTER_MODEL_ID="$(_parse_report "Model Identifier" "${HARDWARE_REPORT}")"
@@ -208,10 +210,15 @@ _setup_env_variables(){
         COMPUTER_MEMORY="$(_parse_report "Memory" "${HARDWARE_REPORT}")"
         COMPUTER_SERIAL="$(_parse_report "Serial Number (system)" "${HARDWARE_REPORT}")"
         CORE_COUNT="$(_parse_report "Total Number of Cores" "${HARDWARE_REPORT}" | awk '{print $1}')"
+
+		# Other commands/tools used:
         OPEN_COMMAND="open"
         ZCAT_COMMAND="gzcat"
+
         DECKLINK_DRIVER_PLIST="/Library/Extensions/DeckLink_Driver.kext/Contents/Info.plist"
         VIDEO_CARD_DRIVER_VERSION="$(defaults read "${DECKLINK_DRIVER_PLIST}" CFBundleVersion)"
+
+		# Title of folder-select dialog window:
         DIR_SELECTION_DIALOG="Select an existing folder (or drag/drop one below). File System/Volumes for external media."
     elif [[ "${QUERY_OS_TYPE}" = "Linux" ]] ; then
         # ===== OS: Linux ==========================
@@ -229,12 +236,29 @@ _setup_env_variables(){
         if [[ ! -f "${DEFAULTFONT}" ]] ; then
           _report -wt "vrecord can't find a preferred font to use, please report this error to https://github.com/amiaopensource/vrecord/issues"
         fi
-        HARDWARE_REPORT=$(lscpu)
-        # TODO: Add more hardware information (similar to MacOS report)?
-        COMPUTER_MODEL_NAME="$(_parse_report "Model Name" "${HARDWARE_REPORT}")"
-        CORE_COUNT="$(nproc --all)"
+
+		# Gather hardware information (for reporting/documentation):
+		HARDWARE_REPORT=$(lscpu)
+        # Since there's nothing reliably-comparable to an Apple "Model"
+        # information in the PC world, let's take the motherboard infos instead:
+        local MOBO_VENDOR="$(cat /sys/devices/virtual/dmi/id/board_vendor)"
+        local MOBO_NAME="$(cat /sys/devices/virtual/dmi/id/board_name)"
+        local MOBO_VERSION="$(cat /sys/devices/virtual/dmi/id/board_version)"
+        COMPUTER_MODEL_NAME="Mainboard: vendor=${MOBO_VENDOR}; name=${MOBO_NAME}; version=${MOBO_VERSION}"
+        COMPUTER_MODEL_ID="$(_parse_report "Vendor ID" "${HARDWARE_REPORT}")"
+        COMPUTER_PROCESSOR_NAME="$(_parse_report "Model Name" "${HARDWARE_REPORT}")"
+        COMPUTER_PROCESSOR_SPEED="$(_parse_report "CPU max MHz" "${HARDWARE_REPORT}")"
+        COMPUTER_PROCESSOR_COUNT="$(_parse_report "Socket(s)" "${HARDWARE_REPORT}")"
+        CORE_COUNT="$(nproc --all)"					# NOTE: This number includes hyperthreading cores
+
+		local MEMINFO_REPORT="$(cat /proc/meminfo)"
+		COMPUTER_MEMORY="$(_parse_report "MemTotal" "${MEMINFO_REPORT}")"
+
+		# Other commands/tools used:
         OPEN_COMMAND="xdg-open"
         ZCAT_COMMAND="zcat"
+
+		# Title of folder-select dialog window:
         DIR_SELECTION_DIALOG="Select an existing folder (or drag/drop one below)."
     else
         echo "Unsupported OS, ${QUERY_OS_TYPE}, detected. Exiting."
@@ -2112,6 +2136,14 @@ _set_scopes(){
     fi
 }
 
+##
+# A helper function to check (review) a given setting (OPTION), for example if
+# its value is listed in its available-choices array.
+#
+# Parameters:
+#   VALUE_NAME
+#   CHOICES (array with available choices passed after ${VALUE_NAME})
+#
 _review_option(){
     unset NO_LOOKUP DEFAULT
     OPTIND=1
@@ -2150,6 +2182,9 @@ _review_option(){
     LOG_OF_OPTIONS+="${VALUE_NAME}: ${SELECTED}\n"
 }
 
+##
+#
+#
 _review_all_options(){
     if [[ "${INVERT_PHASE_2}" = 'true' ]] ; then
         PHASE_VALUE_2="-1*"
