@@ -12,7 +12,7 @@ DVGRAB="dvgrab"
 
 
 if ! ARCHIVE_SIGNATURE=$($ZENITY --entry --text "Enter archive signature:" --title "HDV Ingest"); then
-           exit;
+    exit;
 fi
 ARCHIVE_SIGNATURE=${ARCHIVE_SIGNATURE,,}                        # Force archive signature to lowercase
 
