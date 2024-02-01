@@ -11,13 +11,15 @@ DVCONT="dvcont"
 DVGRAB="dvgrab"
 FFMPEG="ffmpeg"
 
+DV_OUTPUT_FORMAT="raw"
+
 
 if ! ARCHIVE_SIGNATURE=$($ZENITY --entry --text "Enter archive signature:" --title "HDV Ingest"); then
            exit;
 fi
 ARCHIVE_SIGNATURE=${ARCHIVE_SIGNATURE,,}                        # Force archive signature to lowercase
 
-CMD_DV_MASK="$DVGRAB -f dv1 -size 0 -showstatus %s/%s-.dv - | ffplay -f dv -"
+CMD_DV_MASK="$DVGRAB -f $DV_OUTPUT_FORMAT -size 0 -showstatus %s/%s-.dv - | ffplay -f dv -"
 
 PWD=$(pwd)
 CMD=$(printf "$CMD_DV_MASK" "$PWD" "$ARCHIVE_SIGNATURE")
