@@ -7,9 +7,17 @@
 # Include this code in your shell scripts, then "eval" the desired xrandr
 # configuration/variable.
 
-HDMI_RIGHT="xrandr \
+HDMI_RIGHT_SD="xrandr \
     --output HDMI-1 --primary --mode 1920x1080 --pos 0x0 --rotate normal \
     --output HDMI-2 --mode 720x576 --pos 1920x0 --rotate normal \
     --output DP-1 --off \
     --output DP-2 --off \
     --output VGA-1 --off"
+
+
+HDMI_LEFT_SD="xrandr \
+    --output HDMI-1 --primary --mode 1920x1080 --pos 720x0 --rotate normal \
+    --output HDMI-2 --mode 720x576 --pos 0x0 --rotate normal \
+    --output VGA-1 --off \
+    --output DP-1 --off \
+    --output DP-2 --off"
