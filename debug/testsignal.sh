@@ -17,20 +17,24 @@
 # @requires:
 # ./screenlayouts               This file contains xrandr configs for HDMI monitor presets.
 
-MYDIR=$(dirname "$0")
-MPV="mpv"                       # MPV Media Player binary
-TARGET_SCREEN="2"               # [0..n] Change this number to match your multi-screen setup: 1=left,2=right,...
-SCREEN_LAYOUTS="$MYDIR/screenlayouts"
+
 VIDEO="$1"                      # Filename of the video to play back (as test-source).
-LAYOUT="${HDMI_LEFT_SD}"        # Display layout to load. Point this to your preferred config.
+MYDIR=$(dirname "$0")
+SCREEN_LAYOUTS="$MYDIR/screenlayouts"
 
 # Load monitor layout options:
 if [ -e "$SCREEN_LAYOUTS" ]; then
     echo "Loading screen layout from '$SCREEN_LAYOUTS'..."
     source "$SCREEN_LAYOUTS"
-
-    eval "$LAYOUT"
 fi
+
+MPV="mpv"                       # MPV Media Player binary
+TARGET_SCREEN="2"               # [0..n] Change this number to match your multi-screen setup: 1=left,2=right,...
+LAYOUT="${HDMI_RIGHT_SD}"        # Display layout to load. Point this to your preferred config.
+
+
+echo "Layout: '$LAYOUT': $HDMI_RIGHT_SD"
+eval "$LAYOUT"
 
 # Create command for calling the media player:
 CMD="$MPV \
