@@ -2298,9 +2298,10 @@ fi
 
 if [[ -z "${OS_TYPE}" ]] ; then
     _setup_env_variables
-    _include_var OS_TYPE RESOURCE_PATH DEFAULTFONT CORE_COUNT OPEN_COMMAND ZCAT_COMMAND COMPUTER_MODEL_NAME DIR_SELECTION_DIALOG
+    _include_var OS_TYPE RESOURCE_PATH DEFAULTFONT CORE_COUNT OPEN_COMMAND ZCAT_COMMAND COMPUTER_MODEL_NAME DIR_SELECTION_DIALOG COMPUTER_MODEL_ID COMPUTER_PROCESSOR_NAME COMPUTER_PROCESSOR_SPEED COMPUTER_PROCESSOR_COUNT COMPUTER_MEMORY
+
     if [[ "${OS_TYPE}" = "macOS" ]] ; then
-        _include_var COMPUTER_MODEL_ID COMPUTER_PROCESSOR_NAME COMPUTER_PROCESSOR_SPEED COMPUTER_PROCESSOR_COUNT COMPUTER_MEMORY COMPUTER_SERIAL
+        _include_var COMPUTER_SERIAL
     fi
 fi
 
@@ -2525,12 +2526,12 @@ QCLI_COMMAND_FILE=(qcli -f signalstats+aphasemeter+astats+ssim -i "${VRECORD_OUT
 touch "${INGESTLOG}"
 _writeingestlog "computer_name" "$(uname -n)"
 _writeingestlog "computer_model_name" "${COMPUTER_MODEL_NAME}"
+_writeingestlog "computer_model_id" "${COMPUTER_MODEL_ID}"
+_writeingestlog "computer_processor_name" "${COMPUTER_PROCESSOR_NAME}"
+_writeingestlog "computer_processor_speed" "${COMPUTER_PROCESSOR_SPEED}"
+_writeingestlog "computer_processor_count" "${COMPUTER_PROCESSOR_COUNT}"
+_writeingestlog "computer_memory" "${COMPUTER_MEMORY}"
 if [[ "${OS_TYPE}" = "macOS" ]] ; then
-    _writeingestlog "computer_model_id" "${COMPUTER_MODEL_ID}"
-    _writeingestlog "computer_processor_name" "${COMPUTER_PROCESSOR_NAME}"
-    _writeingestlog "computer_processor_speed" "${COMPUTER_PROCESSOR_SPEED}"
-    _writeingestlog "computer_processor_count" "${COMPUTER_PROCESSOR_COUNT}"
-    _writeingestlog "computer_memory" "${COMPUTER_MEMORY}"
     _writeingestlog "computer_serial" "${COMPUTER_SERIAL}"
 fi
 _writeingestlog "computer_cores" "$CORE_COUNT"
