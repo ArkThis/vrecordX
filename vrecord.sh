@@ -19,5 +19,7 @@ IDENTIFIER=${IDENTIFIER,,}                  # Force identifier to lowercase
 ./vrecord $IDENTIFIER
 
 # This keeps the terminal open, after vrecord has closed:
-read -p "Press ENTER key to continue."
-clear
+if [ "$1" != "direct" ]; then
+    read -p "Press ENTER key to continue."
+    clear
+fi
