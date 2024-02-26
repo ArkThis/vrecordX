@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=vrecordX (wait)
+Exec=/opt/vrecordX/vrecord.sh -w
+Icon=emblem-colors-green
+Path=/opt/vrecordX
+Terminal=true
+StartupNotify=false
+GenericName=A professional video recording tool
+Comment=Wait after vrecord has finished.
