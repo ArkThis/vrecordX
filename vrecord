@@ -2421,9 +2421,13 @@ while [[ -z "${ID}" ]] ; do
     fi
     AHEM="a (non-blank) "
 done
+
+# Check directory where to store recorded media files,
+# and remove quoting characters (if present):
 DIR="$(echo "${DIR}" | sed "s/^['\"]\(.*\).$/\1/")"
+
 if [[ -z "${DIR}" ]] ; then
-    _report -d "We'll record files to $(pwd)."
+    _report -d "No recording folder defined. We'll record files to $(pwd)."
     DIR="$(pwd)"
 elif [[ ! -d "${DIR}" ]] ; then
     _report -w "Error: The recording directory at ${DIR} is not a valid directory. Let's use $(pwd) instead."
