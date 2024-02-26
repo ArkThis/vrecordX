@@ -2332,7 +2332,9 @@ QCLI_INSTALLED="$(if command -v qcli >/dev/null ; then echo true ; else echo fal
 DVPACKAGER_INSTALLED="$(if command -v dvpackager >/dev/null ; then echo true ; else echo false ; fi)"
 
 if [[ -f "${CONFIG_FILE}" ]] ; then
+    # If it exists, load the configuration file (as-is):
     . "${CONFIG_FILE}"
+    # From here on, all code/variables from the CONFIG_FILE will be available here globally.
 else
     _report -d "Initializing the configuration file at ${CONFIG_FILE}."
     RUNTYPE="edit"
