@@ -2257,7 +2257,7 @@ _review_all_options(){
 
 # command-line options to set media id and original variables
 OPTIND=1
-while getopts ":hc:erpaxvI:O:i:G" opt ; do
+while getopts ":hc:erpaxvI:O:i:Gd:" opt ; do
     case "${opt}" in
         h) _usage ; exit 0 ;;
         c) CONFIG_FILE="${OPTARG}" ;;
@@ -2271,6 +2271,7 @@ while getopts ":hc:erpaxvI:O:i:G" opt ; do
         O) EXTRAOUTPUTOPTIONS=(${OPTARG}) ;;
         i) ALT_INPUT="${OPTARG}" ;;
         G) VERBOSE_GTKDIALOG="Y" ;;
+        d) DIR_RECORD="${OPTARG}" ;;
         :) _report -w "Option -${OPTARG} requires an argument" ; _usage ; exit 1 ;;
         *) _report -w "Error: bad option -${OPTARG}" ; _usage ; exit 1 ;;
     esac
@@ -2340,6 +2341,14 @@ else
     RUNTYPE="edit"
     STARTUP_VIEW="INPUTSETTINGS"
 fi
+
+# Manual overrides of config file values by commandline parameters:
+# - Recording folder
+if [[ -n "${DIR_RECORD}" ]] ; then
+    _report -d "Overriding recording folder to: ${DIR_RECORD}"
+    DIR="${DIR_RECORD}"
+fi
+# --------------------------------------
 
 _get_decklink_inputs
 _get_avfoundation_inputs
