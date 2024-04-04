@@ -45,6 +45,8 @@ Usage: ${SCRIPTNAME} [ -e | -r | -p | -a | -x | -v | -h ] [IDENTIFIER]
   IDENTIFIER will be used for the filenaming of the output files. It is only
   required in record mode.
 
+  -d  Provide a path to use as current recording directory. Overrides the
+      folder set in the config-file, but only for this session.
   -e  edit the configuration file before recording
   -r  enable record mode [default]
   -p  enable passthrough mode where the video signal coming into the computer
