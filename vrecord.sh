@@ -14,10 +14,12 @@
 #
 #   3. Adds simple support for providing a recording directory path on-the-fly,
 #      overriding the value stored in vrecord's config_file.
+#
+#   3. Adds simple support for providing a recording directory path on-the-fly,
+#      overriding the value stored in vrecord's config_file.
 
 ZENITY="zenity"
 
-# Ask user for IDENTIFIER string.
 # HINT: Closing this input window with "Cancel", or entering an empty value,
 # enters the vrecord GUI normally.
 IDENTIFIER=$($ZENITY --width=400 --entry --text "Enter recording identifier:" --title "vrecord 'Name of Recording'")
@@ -26,17 +28,26 @@ IDENTIFIER=${IDENTIFIER,,}                  # Force identifier to lowercase
 ARGS=""
 
 # Check commandline parameters:
-while getopts "d:w" opt; do
+while getopts "d:l:w" opt; do
     case $opt in
         d)
             DIR_RECORD="${OPTARG}"
             echo "Recording base: '$DIR_RECORD'"
-            ARGS="-d \"$DIR_RECORD/$IDENTIFIER\""
+            ARGS+="-d \"$DIR_RECORD/$IDENTIFIER\""
             ;;
+
+        l)  DURATION_CLI="${OPTARG}"
+            DURATION=$($ZENITY --entry --text "Recording duration limit:" --entry-text="$DURATION_CLI")
+            if [[ ! -z "$DURATION" ]]; then
+                ARGS+="-l $DURATION"
+            fi
+            ;;
+
         w)
             WAIT="wait"
             echo "Enabling wait."
             ;;
+
         ?)
             echo "Invalid option: -${OPTARG}."
             exit 1
