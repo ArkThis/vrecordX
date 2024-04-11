@@ -47,6 +47,8 @@ Usage: ${SCRIPTNAME} [ -e | -r | -p | -a | -x | -v | -h ] [IDENTIFIER]
 
   -d  Provide a path to use as current recording directory. Overrides the
       folder set in the config-file, but only for this session.
+  -l  Set (tape) duration limit to n minutes.
+      Overrides the value set in the config-file, but only for this session.
   -e  edit the configuration file before recording
   -r  enable record mode [default]
   -p  enable passthrough mode where the video signal coming into the computer
@@ -2259,7 +2261,7 @@ _review_all_options(){
 
 # command-line options to set media id and original variables
 OPTIND=1
-while getopts ":hc:erpaxvI:O:i:Gd:" opt ; do
+while getopts ":hc:erpaxvI:O:i:Gd:l:" opt ; do
     case "${opt}" in
         h) _usage ; exit 0 ;;
         c) CONFIG_FILE="${OPTARG}" ;;
@@ -2274,6 +2276,7 @@ while getopts ":hc:erpaxvI:O:i:Gd:" opt ; do
         i) ALT_INPUT="${OPTARG}" ;;
         G) VERBOSE_GTKDIALOG="Y" ;;
         d) DIR_RECORD="${OPTARG}" ;;
+        l) DURATION_CLI="${OPTARG}" ;;
         :) _report -w "Option -${OPTARG} requires an argument" ; _usage ; exit 1 ;;
         *) _report -w "Error: bad option -${OPTARG}" ; _usage ; exit 1 ;;
     esac
@@ -2349,6 +2352,11 @@ fi
 if [[ -n "${DIR_RECORD}" ]] ; then
     _report -d "Overriding recording folder to: ${DIR_RECORD}"
     DIR="${DIR_RECORD}"
+fi
+
+if [[ -n "${DURATION_CLI}" ]]; then
+    _report -d "Overriding tape duration to: ${DURATION_CLI} minutes"
+    DURATION="${DURATION_CLI}"
 fi
 # --------------------------------------
 
