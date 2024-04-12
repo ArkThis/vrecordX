@@ -11,60 +11,18 @@
 #      If an IDENTIFIER is provided, vrecord will record directly - and *not* start the GUI.
 #      If no IDENTIFIER is given (or "Cancel" button pressed), vrecord GUI is started as normally.
 #      The IDENTIFIER is used as sub-foldername to the recording folder.
-#
-#   3. Adds simple support for providing a recording directory path on-the-fly,
-#      overriding the value stored in vrecord's config_file.
-#
-#   3. Adds simple support for providing a recording directory path on-the-fly,
-#      overriding the value stored in vrecord's config_file.
 
 ZENITY="zenity"
-
-# Load existing configuration:
-CONFIG="$HOME/.vrecord.conf"
-source "$CONFIG"
+VRECORD="./vrecord"
 
 # HINT: Closing this input window with "Cancel", or entering an empty value,
 # enters the vrecord GUI normally.
 IDENTIFIER=$($ZENITY --width=400 --entry --text "Enter recording identifier:" --title "vrecord 'Name of Recording'")
 IDENTIFIER=${IDENTIFIER,,}                  # Force identifier to lowercase
 
-if [[ -z "$DIR" ]]; then
-    echo "ERROR: Recording folder not set!"
-    exit 1
-fi
-
-# Consume the 1st parameter ourselves, and forward the rest 1:1 to the main
-# vrecord script:
-ARG1="$1"
-shift 1
 ARGS="$@"
-
-# Use identifier as sub-folder per recording:
-DIR_RECORD="$DIR/$IDENTIFIER"
-if [ -n "$DIR_RECORD" ]; then
-    ARGS+=" -d $DIR_RECORD"
-fi
-
-# Check commandline parameters:
-case $ARG1 in
-    -w)
-        WAIT="wait"
-        echo "Enabling wait."
-        ;;
-
-    *)
-        echo ""
-        echo "SYNTAX:"
-        echo "$0 -w:    Wait for keypress after vrecord exits."
-        echo ""
-        exit 1
-        ;;
-esac
-
-
-CMD="./vrecord $ARGS $IDENTIFIER"
-echo "Command: $CMD"
+CMD="$VRECORD $ARGS $IDENTIFIER"
+echo "Calling: $CMD"
 eval "$CMD" 
 
 # This keeps the terminal open, after vrecord has closed:
