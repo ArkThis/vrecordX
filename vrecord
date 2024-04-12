@@ -7,7 +7,7 @@
 # Linux-friendly(er) fork used and developed for the Austrian Mediathek.
 # Trying to keep improvements in-sync with the original AMIA upstream version.
 
-VERSION="2024-01-30"                                # vrecord's version.
+VERSION="2024-04-12 (vrecordX)"                     # vrecord's version.
 SCRIPTNAME="$(basename "${0}")"                     # Filename of vrecord script.
 SCRIPTDIR="$(dirname "${0}")"                       # Foldername of vrecord script.
 CONFIG_FILE="${HOME}/.${SCRIPTNAME}.conf"           # Location where vrecord stores its config settings.
