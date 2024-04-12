@@ -2,10 +2,11 @@
 Version=1.0
 Type=Application
 Name=vrecordX
-Exec=/opt/vrecordX/vrecord.sh -d /srv/dva-profession/workflow/02-video_capture/final
+Exec=/opt/vrecordX/vrecord.sh -l 250 -1 -s
 Icon=emblem-colors-red
 Path=/opt/vrecordX
 Terminal=true
 StartupNotify=false
-GenericName=A professional video recording tool
-Comment=Override recording folder and don't wait when finished.
+GenericName=Record (250min)
+Comment=Override max. duration, increment filename and use identifier as subfolder.
+Name[en_US]=vrecordX (250min)
