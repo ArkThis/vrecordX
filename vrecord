@@ -62,6 +62,7 @@ Usage: ${SCRIPTNAME} [ -e | -r | -p | -a | -x | -v | -h ] [IDENTIFIER]
   -v  Run ffmpeg with '-loglevel debug'. Using this option creates a very large
       log file, so avoid using this option with 'Visual + Numerical' or any
       playback option that display the log as part of the view.
+  -s  Append IDENTIFIER as subfolder to recording directory.
   -h  display this help menu
 
 Advanced options
@@ -2261,7 +2262,7 @@ _review_all_options(){
 
 # command-line options to set media id and original variables
 OPTIND=1
-while getopts ":hc:erpaxvI:O:i:Gd:l:" opt ; do
+while getopts ":hc:erpaxvI:O:i:Gd:l:s" opt ; do
     case "${opt}" in
         h) _usage ; exit 0 ;;
         c) CONFIG_FILE="${OPTARG}" ;;
@@ -2276,6 +2277,7 @@ while getopts ":hc:erpaxvI:O:i:Gd:l:" opt ; do
         i) ALT_INPUT="${OPTARG}" ;;
         G) VERBOSE_GTKDIALOG="Y" ;;
         d) DIR_RECORD="${OPTARG}" ;;
+        s) REC_SUBFOLDER="Y" ;;
         l) DURATION_CLI="${OPTARG}" ;;
         :) _report -w "Option -${OPTARG} requires an argument" ; _usage ; exit 1 ;;
         *) _report -w "Error: bad option -${OPTARG}" ; _usage ; exit 1 ;;
@@ -2348,12 +2350,19 @@ else
 fi
 
 # Manual overrides of config file values by commandline parameters:
-# - Recording folder
+# - Recording folder:
 if [[ -n "${DIR_RECORD}" ]] ; then
     _report -d "Overriding recording folder to: ${DIR_RECORD}"
     DIR="${DIR_RECORD}"
 fi
 
+# - Recording subfolder:
+if [[ -n "${REC_SUBFOLDER}" && -n "${ID}" ]]; then
+    DIR="${DIR}/${ID}"
+    _report -d "Using subfolder for capture: ${DIR}"
+fi
+
+# - Recording duration limit:
 if [[ -n "${DURATION_CLI}" ]]; then
     _report -d "Overriding tape duration to: ${DURATION_CLI} minutes"
     DURATION="${DURATION_CLI}"
