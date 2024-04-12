@@ -102,8 +102,9 @@ _report(){
     local STARTMESSAGE=""
     local ECHOOPT=""
     OPTIND=1
-    while getopts "qdwxstn" opt ; do
+    while getopts "rqdwxstn" opt ; do
         case "${opt}" in
+            r) COLOR="${NC}" ;;                          # regular plain text. No color.
             q) COLOR="${BLUE}" ;;                        # question mode, use color blue
             d) COLOR="${GREEN}" ;;                       # declaration mode, use color green
             w) COLOR="${RED}" ;;                         # warning mode, use color red
@@ -2512,7 +2513,7 @@ if [[ -f "${VRECORD_OUTPUT}" ]] ; then
         VRECORD_OUTPUT2="${DIR}/${FULL_OUTPUT_ID}-%02d.${EXTENSION}"
         VRECORD_OUTPUT=$(printf "${VRECORD_OUTPUT2}" $i)
         while [[ -f "${VRECORD_OUTPUT}" ]]; do
-            _report -w "Target ${VRECORD_OUTPUT} also exists. Trying again..."
+            _report -r "Target ${VRECORD_OUTPUT} also exists. Trying again..."
             let i++
             VRECORD_OUTPUT=$(printf "${VRECORD_OUTPUT2}" $i)
         done
