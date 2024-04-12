@@ -2498,6 +2498,7 @@ fi
 FULL_OUTPUT_ID="${PREFIX}${ID}${SUFFIX}"
 FULL_CAPTURE_LOG="${LOGDIR}/${FULL_OUTPUT_ID}${CAPTURELOGSUFFIX}"
 
+# This is the output filename where the capture is being recorded into:
 VRECORD_OUTPUT="${DIR}/${FULL_OUTPUT_ID}.${EXTENSION}"
 if [[ -f "${VRECORD_OUTPUT}" ]] ; then
     _report -w "A file called ${VRECORD_OUTPUT} already exists."
