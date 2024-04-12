@@ -34,35 +34,38 @@ if [[ -z "$DIR" ]]; then
     exit 1
 fi
 
+# Consume the 1st parameter ourselves, and forward the rest 1:1 to the main
+# vrecord script:
+ARG1="$1"
+shift 1
+ARGS="$@"
+
 # Use identifier as sub-folder per recording:
 DIR_RECORD="$DIR/$IDENTIFIER"
-
-ARGS=""
+if [ -n "$DIR_RECORD" ]; then
+    ARGS+=" -d $DIR_RECORD"
+fi
 
 # Check commandline parameters:
-while getopts "l:w" opt; do
-    case $opt in
-        l)  DURATION_CLI="${OPTARG}"
-            DURATION=$($ZENITY --entry --text "Recording duration limit:" --entry-text="$DURATION_CLI")
-            if [[ ! -z "$DURATION" ]]; then
-                ARGS+="-l $DURATION"
-            fi
-            ;;
+case $ARG1 in
+    -w)
+        WAIT="wait"
+        echo "Enabling wait."
+        ;;
 
-        w)
-            WAIT="wait"
-            echo "Enabling wait."
-            ;;
-
-        ?)
-            echo "Invalid option: -${OPTARG}."
-            exit 1
-            ;;
-    esac
-done
+    *)
+        echo ""
+        echo "SYNTAX:"
+        echo "$0 -w:    Wait for keypress after vrecord exits."
+        echo ""
+        exit 1
+        ;;
+esac
 
 
-./vrecord -d $DIR_RECORD $ARGS $IDENTIFIER
+CMD="./vrecord $ARGS $IDENTIFIER"
+echo "Command: $CMD"
+eval "$CMD" 
 
 # This keeps the terminal open, after vrecord has closed:
 if [ "$WAIT" == "wait" ]; then
