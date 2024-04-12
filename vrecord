@@ -2509,6 +2509,7 @@ if [[ -f "${VRECORD_OUTPUT}" ]] ; then
         _report -w "Exiting to avoid overwriting that file."
         exit
     else
+        # Allow incrementing the capture filename until a "free slot" is found:
         i=0
         VRECORD_OUTPUT2="${DIR}/${FULL_OUTPUT_ID}-%02d.${EXTENSION}"
         VRECORD_OUTPUT=$(printf "${VRECORD_OUTPUT2}" $i)
