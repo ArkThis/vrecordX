@@ -26,7 +26,5 @@ echo "Calling: $CMD"
 eval "$CMD" 
 
 # This keeps the terminal open, after vrecord has closed:
-if [ "$WAIT" == "wait" ]; then
-    read -p "Press ENTER key to continue."
-    clear
-fi
+read -p "Press ENTER key to continue."
+clear
