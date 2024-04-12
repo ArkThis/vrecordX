@@ -63,6 +63,8 @@ Usage: ${SCRIPTNAME} [ -e | -r | -p | -a | -x | -v | -h ] [IDENTIFIER]
       log file, so avoid using this option with 'Visual + Numerical' or any
       playback option that display the log as part of the view.
   -s  Append IDENTIFIER as subfolder to recording directory.
+  -1  Try adding and incrementing an index number in the recording filename, if
+      one already exists.
   -h  display this help menu
 
 Advanced options
@@ -2262,7 +2264,7 @@ _review_all_options(){
 
 # command-line options to set media id and original variables
 OPTIND=1
-while getopts ":hc:erpaxvI:O:i:Gd:l:s" opt ; do
+while getopts ":hc:erpaxvI:O:i:Gd:l:s1" opt ; do
     case "${opt}" in
         h) _usage ; exit 0 ;;
         c) CONFIG_FILE="${OPTARG}" ;;
@@ -2278,6 +2280,7 @@ while getopts ":hc:erpaxvI:O:i:Gd:l:s" opt ; do
         G) VERBOSE_GTKDIALOG="Y" ;;
         d) DIR_RECORD="${OPTARG}" ;;
         s) REC_SUBFOLDER="Y" ;;
+        1) PLUSONE="Y" ;;               # Increment index (+1) in recording filename if already exists.
         l) DURATION_CLI="${OPTARG}" ;;
         :) _report -w "Option -${OPTARG} requires an argument" ; _usage ; exit 1 ;;
         *) _report -w "Error: bad option -${OPTARG}" ; _usage ; exit 1 ;;
@@ -2502,8 +2505,21 @@ FULL_CAPTURE_LOG="${LOGDIR}/${FULL_OUTPUT_ID}${CAPTURELOGSUFFIX}"
 VRECORD_OUTPUT="${DIR}/${FULL_OUTPUT_ID}.${EXTENSION}"
 if [[ -f "${VRECORD_OUTPUT}" ]] ; then
     _report -w "A file called ${VRECORD_OUTPUT} already exists."
-    _report -w "Exiting to avoid overwriting that file."
-    exit
+
+    if [[ -z "${PLUSONE}" ]]; then
+        _report -w "Exiting to avoid overwriting that file."
+        exit
+    else
+        i=0
+        VRECORD_OUTPUT2="${DIR}/${FULL_OUTPUT_ID}-%02d.${EXTENSION}"
+        VRECORD_OUTPUT=$(printf "${VRECORD_OUTPUT2}" $i)
+        while [[ -f "${VRECORD_OUTPUT}" ]]; do
+            _report -w "Target ${VRECORD_OUTPUT} also exists. Trying again..."
+            let i++
+            VRECORD_OUTPUT=$(printf "${VRECORD_OUTPUT2}" $i)
+        done
+        _report -d "Using another filename (+1) instead: '${VRECORD_OUTPUT}'."
+    fi
 fi
 
 if [[ "${DEVICE_INPUT_CHOICE}" = "0" ]] ; then
