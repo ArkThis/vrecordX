@@ -40,7 +40,7 @@ DIR_RECORD="$DIR/$IDENTIFIER"
 ARGS=""
 
 # Check commandline parameters:
-while getopts "d:l:w" opt; do
+while getopts "l:w" opt; do
     case $opt in
         l)  DURATION_CLI="${OPTARG}"
             DURATION=$($ZENITY --entry --text "Recording duration limit:" --entry-text="$DURATION_CLI")
