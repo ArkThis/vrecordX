@@ -2263,7 +2263,8 @@ _review_all_options(){
 
 # command-line options to set media id and original variables
 OPTIND=1
-while getopts ":hc:erpaxvI:O:i:Gd:l:s1" opt ; do
+#while getopts ":hc:erpaxvI:O:i:Gd:l:s1" opt ; do
+while getopts ":ac:C:d:eGhI:i:l:O:prsvx1" opt ; do
     case "${opt}" in
         h) _usage ; exit 0 ;;
         c) CONFIG_FILE="${OPTARG}" ;;
