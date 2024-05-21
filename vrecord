@@ -63,6 +63,10 @@ Usage: ${SCRIPTNAME} [ -e | -r | -p | -a | -x | -v | -h ] [IDENTIFIER]
   -s  Append IDENTIFIER as subfolder to recording directory.
   -1  Try adding and incrementing an index number in the recording filename, if
       one already exists.
+  -C  Switch Capture type (DEVICE_INPUT_CHOICE). Valid options are:
+      0 = Decklink
+      1 = DV
+      2 = Audio
   -h  display this help menu
 
 Advanced options
@@ -2268,6 +2272,7 @@ while getopts ":ac:C:d:eGhI:i:l:O:prsvx1" opt ; do
     case "${opt}" in
         h) _usage ; exit 0 ;;
         c) CONFIG_FILE="${OPTARG}" ;;
+        C) INPUT_CHOICE="${OPTARG}" ;;
         e) RUNTYPE="edit" ;;
         r) RUNTYPE="record" ;;
         p) RUNTYPE="passthrough" ;;
@@ -2370,6 +2375,13 @@ if [[ -n "${DURATION_CLI}" ]]; then
     _report -d "Overriding tape duration to: ${DURATION_CLI} minutes"
     DURATION="${DURATION_CLI}"
 fi
+
+# - (Device) Input Choice
+if [[ -n "${INPUT_CHOICE}" ]]; then
+    _report -d "Overriding DEVICE_INPUT_CHOICE to: ${INPUT_CHOICE}"
+    DEVICE_INPUT_CHOICE=${INPUT_CHOICE}
+fi
+
 # --------------------------------------
 
 _get_decklink_inputs
