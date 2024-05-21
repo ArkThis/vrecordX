@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=vrecordX (DV)
+Exec=/opt/vrecordX/vrecord.sh -C 1
+Icon=media-tape
+Path=/opt/vrecordX
+Terminal=true
+StartupNotify=false
+GenericName=Record (DV)
+Comment=Sets the capture input to "DV"
+Name[en_US]=vrecordX (DV)

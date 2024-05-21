@@ -1,7 +1,7 @@
 [Desktop Entry]
 Version=1.0
 Type=Application
-Name=vrecordX
+Name=vrecordX (250 min)
 Exec=/opt/vrecordX/vrecord.sh -l 250 -1 -s
 Icon=emblem-colors-red
 Path=/opt/vrecordX
