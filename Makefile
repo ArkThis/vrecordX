@@ -1,4 +1,4 @@
-.PHONY: prep all install clean ffmpeg gtkdialog
+.PHONY: prep all install clean ffmpeg gtkdialog conf_pal
 
 # Enable/disable =(un)comment these lines:
 WITH_DV = true
@@ -25,6 +25,16 @@ endif
 ifdef WITH_OPTIONAL
 	PACKAGES := $(PACKAGES) $(PKG_OPTIONAL)
 endif
+
+
+
+# vrecord configuration files:
+VRECORD_CONF := ${HOME}/.vrecord.conf
+CONF_PAL1 := Resources/Examples/vrecord-example1_PAL.conf
+
+conf_pal:
+	$(info "Installing default Decklink-SDI/PAL config as: $(VRECORD_CONF)")
+	cp -av $(CONF_PAL1) $(VRECORD_CONF)
 
 # -------------------------
 
