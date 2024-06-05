@@ -13,7 +13,8 @@
 #      The IDENTIFIER is used as sub-foldername to the recording folder.
 
 ZENITY="zenity"
-VRECORD="./vrecord"
+SCRIPTDIR="$(dirname "$0")"
+VRECORD="$SCRIPTDIR/vrecord"
 
 # Get commandline parameters:
 ARGS="$@"
