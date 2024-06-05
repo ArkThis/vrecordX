@@ -15,12 +15,20 @@
 ZENITY="zenity"
 VRECORD="./vrecord"
 
+# Get commandline parameters:
+ARGS="$@"
+
 # HINT: Closing this input window with "Cancel", or entering an empty value,
 # enters the vrecord GUI normally.
 IDENTIFIER=$($ZENITY --width=400 --entry --text "Enter recording identifier:" --title "vrecord 'Name of Recording'")
 IDENTIFIER=${IDENTIFIER,,}                  # Force identifier to lowercase
 
-ARGS="$@"
+DURATION=$($ZENITY --width=400 --entry --text "Override limit (minutes):" --title "Max. recording duration limit'")
+# Only override duration from input field if it's actually used:
+if [ -n "$DURATION" ] && [ "$DURATION" -gt 0 ]; then
+    ARGS="$ARGS -l $DURATION"
+fi
+
 CMD="$VRECORD $ARGS $IDENTIFIER"
 echo "Calling: $CMD"
 eval "$CMD" 
