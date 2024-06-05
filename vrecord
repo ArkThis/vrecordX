@@ -67,6 +67,9 @@ Usage: ${SCRIPTNAME} [ -e | -r | -p | -a | -x | -v | -h ] [IDENTIFIER]
       0 = Decklink
       1 = DV
       2 = Audio
+  -f  Enforce existence of recording folder. No convenience fallback to current
+      working folder. Used to avoid accidentially recording to unwanted
+      locations.
   -h  display this help menu
 
 Advanced options
@@ -2267,8 +2270,10 @@ _review_all_options(){
 
 # command-line options to set media id and original variables
 OPTIND=1
+unset FORCE_DIR
+
 #while getopts ":hc:erpaxvI:O:i:Gd:l:s1" opt ; do
-while getopts ":ac:C:d:eGhI:i:l:O:prsvx1" opt ; do
+while getopts ":ac:C:d:efGhI:i:l:O:prsvx1" opt ; do
     case "${opt}" in
         h) _usage ; exit 0 ;;
         c) CONFIG_FILE="${OPTARG}" ;;
@@ -2287,6 +2292,7 @@ while getopts ":ac:C:d:eGhI:i:l:O:prsvx1" opt ; do
         s) REC_SUBFOLDER="Y" ;;
         1) PLUSONE="Y" ;;               # Increment index (+1) in recording filename if already exists.
         l) DURATION_CLI="${OPTARG}" ;;
+        f) FORCE_DIR="true";;
         :) _report -w "Option -${OPTARG} requires an argument" ; _usage ; exit 1 ;;
         *) _report -w "Error: bad option -${OPTARG}" ; _usage ; exit 1 ;;
     esac
@@ -2472,12 +2478,28 @@ done
 DIR="$(echo "${DIR}" | sed "s/^['\"]\(.*\).$/\1/")"
 
 if [[ -z "${DIR}" ]] ; then
-    _report -d "No recording folder defined. We'll record files to $(pwd)."
+    ERROR_MSG="No recording folder defined."
+    if [[ -n "${FORCE_DIR}" ]] ; then
+        _report -d "${ERROR_MSG}"
+        exit 4
+    fi
+    _report -d "${ERROR_MSG} We'll record files to $(pwd)."
     DIR="$(pwd)"
 elif [[ ! -d "${DIR}" ]] ; then
-    _report -w "Error: The recording directory at ${DIR} is not a valid directory. Let's use $(pwd) instead."
+    ERROR_MSG="Error: The recording directory at ${DIR} is not a valid directory."
+    if [[ -n "${FORCE_DIR}" ]] ; then
+        _report -w "${ERROR_MSG}"
+        exit 4
+    fi
+    _report -w "${ERROR_MSG} Let's use $(pwd) instead."
     DIR="$(pwd)"
 fi
+# Writing to our own folder is very certainly a very bad idea. So let's avoid it:
+if [[ "$DIR" == "$SCRIPTDIR" ]]; then
+    _report -w "Refusing to record to vrecord's own script folder."
+    exit 4
+fi
+
 LOGDIR="$(echo "${LOGDIR}" | sed "s/^['\"]\(.*\).$/\1/")"
 if [[ -z "${LOGDIR}" ]] ; then
     _report -d "And place logs at ${DIR} too."

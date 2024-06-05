@@ -2,7 +2,7 @@
 Version=1.0
 Type=Application
 Name=vrecordX (250 min)
-Exec=/opt/vrecordX/vrecord.sh -l 250 -1 -s
+Exec=/opt/vrecordX/vrecord.sh -l 250 -1 -s -f
 Icon=emblem-colors-red
 Path=/opt/vrecordX
 Terminal=true
