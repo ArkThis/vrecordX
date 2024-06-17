@@ -1,7 +1,9 @@
 # Which ffmpeg release/version to use:
-FFMPEG_VERSION := 5.1.3
 #FFMPEG_VERSION := 6.1
 #FFMPEG_RELEASE := https://ffmpeg.org//releases/ffmpeg-6.1.tar.bz2
+FFMPEG_VERSION := 5.1.3
+DECKLINK_SDK_VERSION := 12.4.2
+#DECKLINK_SDK_VERSION := 12.9
 FFMPEG_RELEASE := https://ffmpeg.org/releases/ffmpeg-$(FFMPEG_VERSION).tar.bz2
 FFMPEG_ZIP := ffmpeg-$(FFMPEG_VERSION).tar.bz2
 
@@ -11,7 +13,7 @@ FFMPEG_DIR := build
 # Comment this line out to disable Decklink SDK support (and dependencies):
 WITH_DECKLINK = true
 # Folder where the Blackmagic SDK library source code is located.
-DECKLINK_SDK := ../../DecklinkSDK/Linux/include
+DECKLINK_SDK := ../../DecklinkSDK/Linux/v$(DECKLINK_SDK_VERSION)/include
 
 # Comment this line out to disable DV support (and dependencies):
 WITH_DV = true
