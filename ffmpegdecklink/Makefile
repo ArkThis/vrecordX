@@ -2,8 +2,8 @@
 #FFMPEG_VERSION := 6.1
 #FFMPEG_RELEASE := https://ffmpeg.org//releases/ffmpeg-6.1.tar.bz2
 FFMPEG_VERSION := 5.1.3
-DECKLINK_SDK_VERSION := 12.4.2
-#DECKLINK_SDK_VERSION := 12.9
+#DECKLINK_SDK_VERSION := 12.4.2
+DECKLINK_SDK_VERSION := 12.9
 FFMPEG_RELEASE := https://ffmpeg.org/releases/ffmpeg-$(FFMPEG_VERSION).tar.bz2
 FFMPEG_ZIP := ffmpeg-$(FFMPEG_VERSION).tar.bz2
 
