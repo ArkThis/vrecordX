@@ -54,6 +54,15 @@ Once that has completed successfully, run install:
 This will copy the built binaries into your operating system's folders.
 
 
+## Optional: Install pre-configured vrecord config profiles
+
+Simply install the desired profile by "make `$(CONFIG_NAME)`"
+
+  * `$ make conf_pal`:
+    Installs a good starting profile for ingest of tape-based, (mostly analog) SD PAL video.
+    Captures in FFV1.3/PCM in MKV - and is intended for long-term preservation.
+
+
 # Blackmagic Drivers
 
 ## Download from Website
