@@ -1,3 +1,6 @@
+# Install packages without asking for confirmation?
+APT_YES := -y
+
 GTKD_VERSION := 0.8.5c
 GTKD_RELEASE := https://github.com/puppylinux-woof-CE/gtkdialog/archive/refs/tags/$(GTKD_VERSION).tar.gz
 GTKD_ZIP := gtkdialog-$(GTKD_VERSION).tar.gz
@@ -23,7 +26,7 @@ PACKAGES := $(PKG_DEFAULT)
 
 # Install prerequisites:
 prep:
-	sudo apt-get install -y --no-install-recommends $(PACKAGES)
+	sudo apt-get install $(APT_YES) --no-install-recommends $(PACKAGES)
 
 $(GTKD_DIR):
 	mkdir -p $(GTKD_DIR)

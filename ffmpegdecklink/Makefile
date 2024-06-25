@@ -1,3 +1,6 @@
+# Install packages without asking for confirmation?
+APT_YES := -y
+
 # Which ffmpeg release/version to use:
 #FFMPEG_VERSION := 6.1
 #FFMPEG_RELEASE := https://ffmpeg.org//releases/ffmpeg-6.1.tar.bz2
@@ -171,7 +174,7 @@ apt-updated:
 .PHONY: prep
 prep: apt-updated
 	$(info "Installing required packages...")
-	sudo apt install $(PACKAGES)
+	sudo apt install $(APT_YES) $(PACKAGES)
 
 
 # ---------------------------

@@ -1,5 +1,8 @@
 .PHONY: prep all install clean ffmpeg gtkdialog conf_pal
 
+# Install APT packages without asking for confirmation?
+APT_YES := -y
+
 # Enable/disable =(un)comment these lines:
 WITH_DV = true
 WITH_QCTOOLS = true
@@ -58,7 +61,7 @@ apt-updated:
 
 prep: $(MA_REPO_DEB) apt-updated
 	$(info "Installing required packages...")
-	sudo apt install $(PACKAGES)
+	sudo apt install $(APT_YES) $(PACKAGES)
 
 
 # Build FFmpeg (SDI-only support):
