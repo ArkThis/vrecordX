@@ -15,8 +15,11 @@ FFMPEG_DIR := build
 
 # Comment this line out to disable Decklink SDK support (and dependencies):
 WITH_DECKLINK = true
-# Folder where the Blackmagic SDK library source code is located.
+# Folder where the Blackmagic SDK library source code is located:
+# (relative to the build directory)
 DECKLINK_SDK := ../../DecklinkSDK/Linux/v$(DECKLINK_SDK_VERSION)/include
+# Folder where Blackmagic things are located generally:
+DECKLINK_DIR := ../DecklinkSDK
 
 # Comment this line out to disable DV support (and dependencies):
 WITH_DV = true
@@ -171,6 +174,7 @@ apt-updated:
 	sudo apt update && touch $(APT_UPDATED)
 
 
+# This rule requires sudo priviledges
 .PHONY: prep
 prep: apt-updated
 	$(info "Installing required packages...")
@@ -204,6 +208,12 @@ ffmpeg: ffmpeg-unpack
 	cd $(FFMPEG_DIR) && ./configure --prefix=$(FF_PREFIX) $(FF_COMPILE_FLAGS) && make $(PARALLEL_MAKE)
 
 
+.PHONY: decklink
+decklink:
+	$(info "Handing over to Decklink install...")
+	cd $(DECKLINK_DIR) && make install
+
+
 # ---------------------------
 
 # Folder where vrecord is looking for ffmpeg-decklink binaries:
@@ -222,7 +232,7 @@ $(BREW_FFDECKLINK)/ffplay-dl: $(BREW_FFDECKLINK) $(FFMPEG_DIR)/ffplay
 
 # Call this one (as sudo) to put the binaries in place:
 .PHONY: install
-install: $(BREW_FFDECKLINK)/ffmpeg-dl $(BREW_FFDECKLINK)/ffplay-dl
+install: $(BREW_FFDECKLINK)/ffmpeg-dl $(BREW_FFDECKLINK)/ffplay-dl decklink
 
 
 .PHONY: all
