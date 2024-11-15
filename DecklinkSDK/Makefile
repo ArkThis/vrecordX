@@ -13,7 +13,9 @@
 .PHONY = install deb-pkgs
 
 
-DECKLINK_SDK_VERSION := 12.9
+#DECKLINK_SDK_VERSION := 12.9a3
+DECKLINK_SDK_VERSION := 12.4.1a15
+
 BM_TAR := bm-deb-$(DECKLINK_SDK_VERSION).tar
 BM_LINK := http://download.av-rd.com/bm/$(BM_TAR)
 
@@ -31,7 +33,7 @@ install: deb-pkgs
 
 	apt update && \
 	apt install \
-	./desktopvideo_*_amd64.deb \
-	./desktopvideo-gui_*_amd64.deb \
+	./desktopvideo_$(DECKLINK_SDK_VERSION)_amd64.deb \
+	./desktopvideo-gui_$(DECKLINK_SDK_VERSION)_amd64.deb \
 	./mediaexpress_*_amd64.deb
 
