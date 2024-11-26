@@ -88,8 +88,8 @@ all: ffmpeg gtkdialog
 install:
 	cd ffmpegdecklink && sudo make install
 	cd gtkdialog && sudo make install
-	make $(DEFAULT_CONF)
 	cd $(DECKLINK_DIR) && sudo make install
+	#make $(DEFAULT_CONF)
 
 
 clean:
