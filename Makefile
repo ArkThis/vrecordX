@@ -1,5 +1,11 @@
 .PHONY: prep all install clean ffmpeg gtkdialog conf_pal
 
+# Default vrecord config presets to install:
+DEFAULT_CONF := conf_pal
+
+# Folder where Blackmagic things are located generally:
+DECKLINK_DIR := DecklinkSDK
+
 # Install APT packages without asking for confirmation?
 APT_YES := -y
 
@@ -82,6 +88,8 @@ all: ffmpeg gtkdialog
 install:
 	cd ffmpegdecklink && sudo make install
 	cd gtkdialog && sudo make install
+	make $(DEFAULT_CONF)
+	cd $(DECKLINK_DIR) && sudo make install
 
 
 clean:
