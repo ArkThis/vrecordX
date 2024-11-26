@@ -10,6 +10,9 @@
 # @author: Peter B. (peter@ArkThis.com)
 
 
+# Install packages without asking for confirmation?
+APT_YES := -y
+
 .PHONY = install deb-pkgs
 
 
@@ -32,7 +35,7 @@ install: deb-pkgs
 	$(info "Installing Blackmagic drivers and tools...")
 
 	apt update && \
-	apt install \
+	apt install $(APT_YES) \
 	./desktopvideo_$(DECKLINK_SDK_VERSION)_amd64.deb \
 	./desktopvideo-gui_$(DECKLINK_SDK_VERSION)_amd64.deb \
 	./mediaexpress_*_amd64.deb
