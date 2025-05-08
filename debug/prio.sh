@@ -22,3 +22,6 @@ eval "$CMD"
 
 # Show Updated/current scheduling:
 chrt -p $PID
+
+read -p "Press any key to close."
+clear
