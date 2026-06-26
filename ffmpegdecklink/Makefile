@@ -99,16 +99,19 @@ FF_DECKLINK := \
 	--extra-libs='-lpthread -lm' \
 	--enable-nonfree \
 	--extra-cflags='-I$(DECKLINK_SDK)' \
+	--extra-cxxflags='-I$(DECKLINK_SDK)' \
 	--extra-ldflags='-I$(DECKLINK_SDK)' \
 	--enable-decklink
 
 
-FF_COMPILE_FLAGS := $(FF_COMPILE_FLAGS1) $(FF_COMPILE_FLAGS2) $(FF_COMPILE_FLAGS3)
+#FF_COMPILE_FLAGS := $(FF_COMPILE_FLAGS1) $(FF_COMPILE_FLAGS2) $(FF_COMPILE_FLAGS3)
+FF_COMPILE_FLAGS := $(FF_COMPILE_FLAGS1) $(FF_COMPILE_FLAGS3)
 
 PKG_DEFAULT = \
 	wget \
 	build-essential \
 	yasm \
+	nasm \
 	libbz2-dev \
 	libfreetype6-dev \
 	libopenjp2-7-dev \
