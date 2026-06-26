@@ -13,7 +13,7 @@
 # Install packages without asking for confirmation?
 APT_YES := -y
 
-.PHONY = install deb-pkgs
+.PHONY = install deb-pkgs sdk all
 
 
 DECKLINK_SDK_VERSION := 12.9a3
@@ -23,16 +23,18 @@ BM_TAR := bm-deb-$(DECKLINK_SDK_VERSION).tar
 BM_LINK := http://download.arkthis.com/bm/$(BM_TAR)
 SDK_ZIP:= SDK_$(DECKLINK_SDK_VERSION)-include.zip
 
-deb-pkgs: $(BM_TAR)
-	tar -xvf $(BM_TAR) --wildcards "*.deb"
-
 $(BM_TAR):
 	$(info "Downloading Blackmagic packages...")
 	wget -cO $(BM_TAR) $(BM_LINK)
 
-$(SDK_ZIP): $(BM_TAR)
+deb-pkgs: $(BM_TAR)
+	tar -xvf $(BM_TAR) --wildcards "*.deb"
+
+sdk: $(BM_TAR) 
 	tar -xvf $(BM_TAR) --wildcards "SDK_*-include.zip"
 	unzip -d Linux/v$(DECKLINK_SDK_VERSION)/ SDK_$(DECKLINK_SDK_VERSION)-include.zip
+
+all: sdk deb-pkgs
 
 install: deb-pkgs
 	$(info "Installing Blackmagic drivers and tools...")
@@ -42,4 +44,3 @@ install: deb-pkgs
 	./desktopvideo_$(DECKLINK_SDK_VERSION)_amd64.deb \
 	./desktopvideo-gui_$(DECKLINK_SDK_VERSION)_amd64.deb \
 	./mediaexpress_*_amd64.deb
-
