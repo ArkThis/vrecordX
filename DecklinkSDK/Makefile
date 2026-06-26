@@ -15,9 +15,8 @@ APT_YES := -y
 
 .PHONY = install deb-pkgs sdk all
 
-
-DECKLINK_SDK_VERSION := 12.9a3
-#DECKLINK_SDK_VERSION := 12.4.1a15
+DECKLINK_SDK_VERSION := 12.9
+#DECKLINK_SDK_VERSION := 12.4.1
 
 BM_TAR := bm-deb-$(DECKLINK_SDK_VERSION).tar
 BM_LINK := http://download.arkthis.com/bm/$(BM_TAR)
