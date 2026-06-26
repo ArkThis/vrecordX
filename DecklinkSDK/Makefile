@@ -33,7 +33,7 @@ deb-pkgs: $(BM_TAR)
 
 # Unpack and extract the SDK headers in 'Linux/vXX/include' subfolder:
 sdk: $(BM_TAR)
-	tar -xvf $(BM_TAR) --wildcards "SDK_*-include.zip"
+	tar -xvf $(BM_TAR) --strip-components=1 --wildcards "SDK/SDK_*-include.zip"
 	unzip -d Linux/v$(DECKLINK_SDK_VERSION)/ SDK_$(DECKLINK_SDK_VERSION)-include.zip
 
 all: sdk deb-pkgs
