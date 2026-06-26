@@ -4,12 +4,15 @@ APT_YES := -y
 # Which ffmpeg release/version to use:
 FFMPEG_VERSION := 5.1.6
 #FFMPEG_VERSION := 6.1.2
+#FFMPEG_VERSION := 7.1.5
+#FFMPEG_VERSION := 8.1.2
+
 
 # Which decklink SDK version to compile against?
 #DECKLINK_SDK_VERSION := 12.4.2
 DECKLINK_SDK_VERSION := 12.9
+#DECKLINK_SDK_VERSION := 16.0
 
-#FFMPEG_RELEASE := https://ffmpeg.org//releases/ffmpeg-6.1.tar.bz2
 FFMPEG_RELEASE := https://ffmpeg.org/releases/ffmpeg-$(FFMPEG_VERSION).tar.bz2
 FFMPEG_ZIP := ffmpeg-$(FFMPEG_VERSION).tar.bz2
 
