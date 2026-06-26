@@ -23,14 +23,17 @@ BM_TAR := bm-deb-$(DECKLINK_SDK_VERSION).tar
 BM_LINK := http://download.arkthis.com/bm/$(BM_TAR)
 SDK_ZIP:= SDK_$(DECKLINK_SDK_VERSION)-include.zip
 
+# Retrieving slim Debian-only BM package from $BM_LINK:
 $(BM_TAR):
 	$(info "Downloading Blackmagic packages...")
 	wget -cO $(BM_TAR) $(BM_LINK)
 
+# Unpack only the APT .deb files from Blackmagic package:
 deb-pkgs: $(BM_TAR)
 	tar -xvf $(BM_TAR) --wildcards "*.deb"
 
-sdk: $(BM_TAR) 
+# Unpack and extract the SDK headers in 'Linux/vXX/include' subfolder:
+sdk: $(BM_TAR)
 	tar -xvf $(BM_TAR) --wildcards "SDK_*-include.zip"
 	unzip -d Linux/v$(DECKLINK_SDK_VERSION)/ SDK_$(DECKLINK_SDK_VERSION)-include.zip
 
