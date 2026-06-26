@@ -20,7 +20,7 @@ DECKLINK_SDK_VERSION := 12.9a3
 #DECKLINK_SDK_VERSION := 12.4.1a15
 
 BM_TAR := bm-deb-$(DECKLINK_SDK_VERSION).tar
-BM_LINK := http://download.av-rd.com/bm/$(BM_TAR)
+BM_LINK := http://download.arkthis.com/bm/$(BM_TAR)
 
 deb-pkgs: $(BM_TAR)
 	tar -xvf $(BM_TAR) --wildcards "*.deb"
