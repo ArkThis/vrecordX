@@ -15,8 +15,9 @@ APT_YES := -y
 
 .PHONY = install deb-pkgs sdk all
 
-#DECKLINK_SDK_VERSION := 16.0
-DECKLINK_SDK_VERSION := 12.9
+# Requires ffmpeg v8 (or higher):
+DECKLINK_SDK_VERSION := 16.0
+#DECKLINK_SDK_VERSION := 12.9
 #DECKLINK_SDK_VERSION := 12.4.1
 
 BM_TAR := bm-deb-$(DECKLINK_SDK_VERSION).tar

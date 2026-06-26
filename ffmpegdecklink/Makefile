@@ -2,16 +2,18 @@
 APT_YES := -y
 
 # Which ffmpeg release/version to use:
-FFMPEG_VERSION := 5.1.6
+#FFMPEG_VERSION := 5.1.6
 #FFMPEG_VERSION := 6.1.2
 #FFMPEG_VERSION := 7.1.5
-#FFMPEG_VERSION := 8.1.2
+FFMPEG_VERSION := 8.1.2
 
 
 # Which decklink SDK version to compile against?
+# Requires ffmpeg v8 (or higher):
+DECKLINK_SDK_VERSION := 16.0
+# Work with ffmpeg v5/v6:
+#DECKLINK_SDK_VERSION := 12.9
 #DECKLINK_SDK_VERSION := 12.4.2
-DECKLINK_SDK_VERSION := 12.9
-#DECKLINK_SDK_VERSION := 16.0
 
 FFMPEG_RELEASE := https://ffmpeg.org/releases/ffmpeg-$(FFMPEG_VERSION).tar.bz2
 FFMPEG_ZIP := ffmpeg-$(FFMPEG_VERSION).tar.bz2
@@ -21,14 +23,14 @@ FFMPEG_DIR := build
 
 # Comment this line out to disable Decklink SDK support (and dependencies):
 WITH_DECKLINK = true
+# Folder where Blackmagic things are located generally:
+DECKLINK_DIR := ../DecklinkSDK
 # Folder where the Blackmagic SDK library source code is located:
 # (relative to the build directory)
 DECKLINK_SDK := ../../DecklinkSDK/Linux/v$(DECKLINK_SDK_VERSION)/include
-# Folder where Blackmagic things are located generally:
-DECKLINK_DIR := ../DecklinkSDK
 
 # Comment this line out to disable DV support (and dependencies):
-WITH_DV = true
+#WITH_DV = true
 
 # Comment this line out to disable NVIDIA CUDA support (and dependencies):
 #WITH_CUDA = true
@@ -54,7 +56,8 @@ BREW_FFDECKLINK := /usr/local/opt/ffmpegdecklink/bin
 # FFmpeg configure parameters:
 FF_PREFIX := /opt/ffmpegdecklink
 FF_LICENSES := --enable-gpl --enable-version3
-FFPLAY_SPECIFIC := --enable-postproc --enable-ffplay
+#FFPLAY_SPECIFIC := --enable-postproc --enable-ffplay
+FFPLAY_SPECIFIC := --enable-ffplay
 PARALLEL_MAKE := -k -j16
 
 ## Default compile flags:
@@ -113,7 +116,13 @@ PKG_DEFAULT = \
 	yasm \
 	nasm \
 	libbz2-dev \
+	libfontconfig1-dev \
 	libfreetype6-dev \
+	libsdl2-dev
+
+# Optional, additional format support:
+# (not required for FFV1 capture)
+PKG_OPTIONAL = \
 	libopenjp2-7-dev \
 	libvpx-dev \
 	libvorbis-dev \
@@ -123,7 +132,6 @@ PKG_DEFAULT = \
 	libfaac-dev \
 	libfaad-dev \
 	libx265-dev \
-	libsdl2-dev \
 	libva-dev \
 	libvdpau-dev \
 	libxcb1-dev \
@@ -131,8 +139,7 @@ PKG_DEFAULT = \
 	libxcb-xfixes0-dev \
 	libopus-dev \
 	libsnappy-dev \
-	libtheora-dev \
-	libfontconfig1-dev
+	libtheora-dev
 
 # Packages for DV support:
 PKG_DV = \
