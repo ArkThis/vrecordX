@@ -45,6 +45,6 @@ install: deb-pkgs
 
 	apt update && \
 	apt install $(APT_YES) \
-	./desktopvideo_$(DECKLINK_SDK_VERSION)_amd64.deb \
-	./desktopvideo-gui_$(DECKLINK_SDK_VERSION)_amd64.deb \
+	./desktopvideo_$(DECKLINK_SDK_VERSION)*_amd64.deb \
+	./desktopvideo-gui_$(DECKLINK_SDK_VERSION)*_amd64.deb \
 	./mediaexpress_*_amd64.deb
