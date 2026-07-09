@@ -1,7 +1,10 @@
 # Install packages without asking for confirmation?
 APT_YES := -y
 
-GTKD_VERSION := 0.8.5c
+# gtkdialog version:
+# 0.8.5e for MX-Linux 25
+# 0.8.5c for ubuntu 20.04 - 22.04 (legacy)
+GTKD_VERSION := 0.8.5e
 GTKD_RELEASE := https://github.com/puppylinux-woof-CE/gtkdialog/archive/refs/tags/$(GTKD_VERSION).tar.gz
 GTKD_ZIP := gtkdialog-$(GTKD_VERSION).tar.gz
 GTKD_DIR := build
