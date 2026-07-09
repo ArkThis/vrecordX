@@ -15,7 +15,7 @@ WITH_QCTOOLS = true
 #WITH_OPTIONAL = true
 
 # MediaArea repository information package (Debian-based):
-MA_REPO_DEB = repo-mediaarea_1.0-24_all.deb 
+MA_REPO_DEB = repo-mediaarea_1.0-27_all.deb
 
 # List of required packages:
 PKG_DEFAULT = vlc mpv cowsay mediainfo-gui git build-essential
